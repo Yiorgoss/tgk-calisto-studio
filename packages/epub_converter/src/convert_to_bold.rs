@@ -9,7 +9,7 @@ pub fn insert_bold_tags(file_contents: &[u8], bold_fullstop: bool) -> Vec<u8> {
     // let mut reader = &file_contents;
     let mut reader = Reader::from_reader(file_contents);
     // reader.trim_text_end(true);
-    reader.trim_text(true);
+    reader.config_mut().trim_text(true);
     let mut buf = Vec::new();
 
     println!("Creating Writer");
@@ -36,11 +36,8 @@ pub fn insert_bold_tags(file_contents: &[u8], bold_fullstop: bool) -> Vec<u8> {
                     writer.write_event(Event::Text(e)).unwrap();
                     continue;
                 }
-                // let replace_text = e.borrow();
-                // let unescaped_u8 = e.borrow().unescape().unwrap().as_ref().split(" ");
-                let unescaped = e.unescape().unwrap().as_ref().to_owned();
+                let unescaped = e.decode().unwrap().as_ref().to_owned();
                 for text in unescaped.split(' ') {
-                    // for text in unescaped.split([' ', '-']) {
                     // bug where dashed togethre words are treaded as one big word
                     match text.len() {
                         0 => (),
@@ -122,4 +119,15 @@ fn surround_with_bold_tags(
     writer
         .write_event(Event::Text(BytesText::new(" ")))
         .unwrap();
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_convert_to_bold() {
+        // insert_bold_tags(file_contents: &[u8], bold_fullstop: bool) 
+    }
 }

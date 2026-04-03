@@ -4,6 +4,21 @@ mod convert_to_bold;
 mod custom_font;
 
 use wasm_bindgen::prelude::*;
+#[wasm_bindgen]
+pub fn insert_into_content_opf(input_file: &[u8], font_name: &str) -> Vec<u8> {
+    custom_font::insert_into_content_opf(input_file, font_name)
+}
+
+#[wasm_bindgen]
+pub fn convert(arr: &[u8], bold_fullstop: bool) -> Vec<u8> {
+    convert_to_bold::insert_bold_tags(arr, bold_fullstop)
+}
+
+#[wasm_bindgen]
+pub fn alter_identifier(arr: &[u8]) -> Vec<u8> {
+    alter_identifier::alter_identifier(arr)
+}
+
 //
 // #[wasm_bindgen]
 // pub fn add_css(
@@ -33,17 +48,3 @@ use wasm_bindgen::prelude::*;
 //     custom_font::insert_custom_font(input_file, string)
 // }
 
-#[wasm_bindgen]
-pub fn insert_into_content_opf(input_file: &[u8], font_name: &str) -> Vec<u8> {
-    custom_font::insert_into_content_opf(input_file, font_name)
-}
-
-#[wasm_bindgen]
-pub fn convert(arr: &[u8], bold_fullstop: bool) -> Vec<u8> {
-    convert_to_bold::insert_bold_tags(arr, bold_fullstop)
-}
-
-#[wasm_bindgen]
-pub fn alter_identifier(arr: &[u8]) -> Vec<u8> {
-    alter_identifier::alter_identifier(arr)
-}

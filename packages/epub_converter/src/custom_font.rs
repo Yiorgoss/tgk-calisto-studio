@@ -8,7 +8,7 @@ use quick_xml::Writer;
 pub fn insert_into_content_opf(input_file: &[u8], font_name: &str) -> Vec<u8> {
     let mut reader = Reader::from_reader(input_file);
     // reader.trim_text_end(true);
-    reader.trim_text(true);
+    reader.config_mut().trim_text(true);
     let mut buf = Vec::new();
 
     println!("Creating Writer");

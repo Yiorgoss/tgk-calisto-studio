@@ -8,7 +8,7 @@ use quick_xml::Writer;
 pub fn alter_identifier(input_file: &[u8]) -> Vec<u8> {
     let mut reader = Reader::from_reader(input_file);
     // reader.trim_text_end(true);
-    reader.trim_text(true);
+    reader.config_mut().trim_text(true);
     let mut buf = Vec::new();
 
     let mut writer = Writer::new(Cursor::new(Vec::new()));
@@ -24,7 +24,7 @@ pub fn alter_identifier(input_file: &[u8]) -> Vec<u8> {
                 writer.write_event(Event::Start(e)).unwrap();
             }
             Ok(Event::Text(e)) => {
-                let text = e.unescape().unwrap().into_owned();
+                let text = e.decode().unwrap().into_owned();
 
                 if identifier_open == true {
                     let text = format!("{}_diff_copy", text);

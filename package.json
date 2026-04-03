@@ -20,7 +20,8 @@
 		"pushVersion": "git add . && git commit -m \"$(git rev-list --count main)\" && git push origin main",
 		"payload-typegen": "cp ../cms-mt/src/payload-types.ts ./src/payload-types.ts",
 		"cf-typegen": "wrangler types && mv worker-configuration.d.ts src/",
-		"update-kv": "wrangler kv bulk put blobs/data.json --local --binding CALISTO_STUDIO_KV_CACHE --preview"
+		"update-kv": "wrangler kv bulk put blobs/data.json --local --binding CALISTO_STUDIO_KV_CACHE --preview",
+		"embolden": "wasm-pack build packages/epub_converter --target=web --out-dir ../../src/lib/wasm/embolden && rm src/lib/wasm/embolden/.gitignore"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250430.0",
