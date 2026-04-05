@@ -34,8 +34,5 @@
 			<Image image={blockData?.bgImage} />
 		</div>
 	{/if}
-	<div
-		class="z-0 h-[1px] w-full"
-		style:background-color={bgColor?.value ?? 'var(--color-background)'}
-	></div>
+	<div class="z-0 h-[1px] w-full" style:background-color={bgColor?.value ?? 'transparent'}></div>
 </div>

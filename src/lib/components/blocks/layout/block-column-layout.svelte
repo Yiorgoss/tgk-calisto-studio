@@ -54,19 +54,22 @@
 	style:background={style?.color}
 	style:border-radius={style?.borderRadius}
 	class:container={style?.container}
-	class="mx-auto md:py-5 relative"
+	class="mx-auto md:py-5 relative grid grid-cols-1 grid-rows-1"
 >
-	{#if blockData?.bgImage}
-		<div class="-z-0 absolute inset-0">
-			<Image image={blockData?.bgImage} />
-		</div>
-	{/if}
+	<div class=" row-start-1 col-start-1">
+		<Image class="" image={blockData?.bgImage} />
+	</div>
+	<div class=" row-start-1 col-start-1">
+		{#each blockData?.stickerList ?? [] as sticker}
+			<Sticker data={sticker} />
+		{/each}
+	</div>
 	<div
 		style:overflow={style?.overflow}
 		style:gap={style?.gap}
 		style:padding={mobile.current ? mobileStyle?.padding : style?.padding}
 		class:flex-wrap={layout == 'threeColumns'}
-		class=" flex z-0 container gap-0 md:gap-10 justify-center items-center md:items-stretch h-full flex-col md:flex-row mx-auto"
+		class="col-start-1 row-start-1 flex z-10 container gap-0 md:gap-10 justify-center items-center md:items-stretch h-full flex-col md:flex-row mx-auto"
 		{@attach animate({ animation })}
 	>
 		<div
@@ -107,5 +110,4 @@
 			</div>
 		{/if}
 	</div>
-	<Sticker data={blockData?.sticker} />
 </section>
