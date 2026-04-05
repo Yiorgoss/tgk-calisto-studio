@@ -60,7 +60,7 @@
 		<Image class="" image={blockData?.bgImage} />
 	</div>
 	<div class=" row-start-1 col-start-1">
-		{#each blockData?.stickerList ?? [] as sticker}
+		{#each blockData?.arr ?? [] as sticker}
 			<Sticker data={sticker} />
 		{/each}
 	</div>

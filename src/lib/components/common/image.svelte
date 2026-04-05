@@ -22,7 +22,7 @@
 		fetchpriority?: 'low' | 'auto' | 'high' | null | undefined;
 	} = $props();
 
-	let { style, alt, ignoreSizes, animation, stickerList } = $derived(image || {});
+	let { style, alt, ignoreSizes, animation, arr: stickerList } = $derived(image || {});
 
 	let asset = $derived((image?.url as Asset) || {});
 	onMount(() => cb && cb());
