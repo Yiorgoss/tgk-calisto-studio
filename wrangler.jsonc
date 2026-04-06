@@ -8,26 +8,41 @@
 	"main": ".svelte-kit/cloudflare/_worker.js",
 	"compatibility_date": "2025-04-30",
 	"compatibility_flags": ["nodejs_compat"],
-	"vars": {
-		"PUBLIC_ENV": "PROD",
-		"PUBLIC_DEV_CMS": "http://localhost:3000",
-		"PUBLIC_PROD_CMS": "https://admin.calisto.studio",
-		"PUBLIC_ASSET_URL": "https://assets.calisto.studio",
-		"PUBLIC_TEST_ASSET_URL": "https://test-assets.calisto.studio",
-		"PUBLIC_DOMAIN_NAME": "%domainName%"
-	},
-	"assets": {
-		"binding": "ASSETS",
-		"directory": ".svelte-kit/cloudflare"
-	},
-	"kv_namespaces": [
-		{
-			"binding": "CALISTO_STUDIO_KV_CACHE",
-			"id": "222c6845593445efa369f4eda7a02e31",
-			"preview_id": "213ef123d5674ed2b153c1f1c2c25f07"
-		}
-	],
 	"env": {
+		"production": {
+			"vars": {
+				"PUBLIC_ENV": "PROD",
+				"PUBLIC_DEV_CMS": "http://localhost:3000",
+				"PUBLIC_PROD_CMS": "https://admin.calisto.studio",
+				"PUBLIC_ASSET_URL": "https://assets.calisto.studio",
+				"PUBLIC_TEST_ASSET_URL": "https://test-assets.calisto.studio",
+				"PUBLIC_DOMAIN_NAME": "%domainName%"
+			},
+			"assets": {
+				"binding": "ASSETS",
+				"directory": ".svelte-kit/cloudflare"
+			},
+			"kv_namespaces": [
+				{
+					"binding": "CALISTO_STUDIO_KV_CACHE",
+					"id": "222c6845593445efa369f4eda7a02e31",
+					"preview_id": "213ef123d5674ed2b153c1f1c2c25f07"
+				}
+			],
+			"observability": {
+				"enabled": true
+			},
+			"routes": [
+				{
+					"pattern": "%domainName%",
+					"custom_domain": true
+				},
+				{
+					"pattern": "www.%domainName%",
+					"custom_domain": true
+				}
+			]
+		},
 		"staging": {
 			"vars": {
 				"PUBLIC_ENV": "TEST",
@@ -49,22 +64,12 @@
 					"pattern": "staging.%domainName%",
 					"custom_domain": true
 				}
-			]
+			],
+			"observability": {
+				"enabled": true
+			}
 		}
-	},
-	"observability": {
-		"enabled": true
-	},
-	"routes": [
-		{
-			"pattern": "%domainName%",
-			"custom_domain": true
-		},
-		{
-			"pattern": "www.%domainName%",
-			"custom_domain": true
-		}
-	]
+	}
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
