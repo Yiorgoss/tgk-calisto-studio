@@ -54,13 +54,13 @@
 	style:background={style?.color}
 	style:border-radius={style?.borderRadius}
 	class:container={style?.container}
-	class="mx-auto md:py-5 relative grid grid-cols-1 grid-rows-1"
+	class="mx-auto md:py-5 relative overflow-hidden grid grid-cols-1 grid-rows-1"
 >
-	<div class=" row-start-1 col-start-1">
-		<Image class="" image={blockData?.bgImage} />
+	<div class="absolute">
+		<Image image={blockData?.bgImage} />
 	</div>
-	<div class=" row-start-1 col-start-1">
-		{#each blockData?.arr ?? [] as sticker}
+	<div class="relative row-start-1 col-start-1">
+		{#each blockData?.s ?? [] as sticker}
 			<Sticker data={sticker} />
 		{/each}
 	</div>
@@ -75,10 +75,8 @@
 		<div
 			style:align-items={style?.alignY}
 			style:justify-content={style?.alignX}
-			class={cn(
-				'animate-child w-full flex grow-1 justify-center items-center md:items-stretch',
-				widthClass[0]
-			)}
+			style:display="flex"
+			class={cn('animate-child w-full flex grow-1 items-center md:items-stretch', widthClass[0])}
 		>
 			{#if columnOne && columnOne.length != 0}
 				<RenderBlocks blockData={columnOne[0]} />
