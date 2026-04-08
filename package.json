@@ -18,8 +18,8 @@
 		"deploy": "pnpm install && pnpm payload-typegen && sh scripts/add_domain_wrangler.sh && PUBLIC_ENV=PROD vite build && wrangler deploy --env=production && pnpm pushVersion && exit 0",
 		"deploy:staging": "PUBLIC_DEV_CMS=https://staging-cms.calisto.studio vite build && wrangler deploy --env=staging",
 		"pushVersion": "git add . && git commit -m \"$(git rev-list --count main)\" && git push origin main",
-		"payload-typegen": "cp ../cms-mt/src/payload-types.ts ./src/payload-types.ts",
-		"cf-typegen": "wrangler types && mv worker-configuration.d.ts src/",
+		"typegen:payload": "cp ../cms-mt/src/payload-types.ts ./src/payload-types.ts",
+		"typegen:cf": "wrangler types && mv worker-configuration.d.ts src/",
 		"update-kv": "wrangler kv bulk put blobs/data.json --local --binding CALISTO_STUDIO_KV_CACHE --preview",
 		"embolden": "wasm-pack build packages/epub_converter --target=web --out-dir ../../src/lib/wasm/embolden && rm src/lib/wasm/embolden/.gitignore"
 	},

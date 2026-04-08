@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 	import Sticker from './sticker.svelte';
 	import { animate } from '@/attachments/animations/animate.svelte';
+	import { MediaQuery } from 'svelte/reactivity';
 
 	let {
 		image,
@@ -22,11 +23,12 @@
 		fetchpriority?: 'low' | 'auto' | 'high' | null | undefined;
 	} = $props();
 
-	let { style, alt, ignoreSizes, animation, stickerList } = $derived(image || {});
+	let { style, alt, ignoreSizes, animation, arr } = $derived(image || {});
 
 	let asset = $derived((image?.url as Asset) || {});
 	onMount(() => cb && cb());
 
+	const mobile = new MediaQuery('max-width: 480px');
 	let loaded = $state(false);
 
 	let { srcset, sizes } = $derived.by(() => {
@@ -73,7 +75,7 @@
 		style:--placeholder={`url(${site.storage}/${asset?.sizes?.placeholder?.filename})`}
 		style:height={style?.height}
 		style:width={style?.width}
-		style:padding={style?.padding}
+		style:padding={mobile.current ? mobileStyle?.padding : style?.padding}
 		style:border-radius={style?.borderRadius}
 	>
 		<div class:hidden={loaded} class="absolute inset-0 bg-white/40 animate-pulse"></div>
@@ -116,7 +118,7 @@
 			class="col-start-1 row-start-1 h-full w-full"
 		></div>
 		<div class="col-start-1 relative row-start-1 h-full w-full">
-			{#each stickerList ?? [] as sticker}
+			{#each arr ?? [] as sticker}
 				<Sticker data={sticker.s} />
 			{/each}
 		</div>
