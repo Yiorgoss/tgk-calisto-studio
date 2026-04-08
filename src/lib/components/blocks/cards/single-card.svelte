@@ -7,16 +7,18 @@
 
 	const { blockData }: { blockData: ISingleCard } = $props();
 	const { richText, image, link, style } = $derived(blockData || {});
+
+	$inspect({ blockData, style });
 </script>
 
 <Card.Root
 	style={`background:${style?.background};border:${style?.border};border-radius:${style?.borderRadius};max-width:${style?.maxWidth};`}
-	class="h-full w-full"
+	class="-full w-full"
 >
 	<a href={(link as Page)?.slug} aria-hidden={!(link as Page)?.slug}>
 		<Card.Header>
-			<div style:justify-content={style?.alginX} style:align-items={style?.alignY} class="flex">
-				<Image class="rounded-lg p-5 " {image} />
+			<div style:justify-content={style?.alignX} style:align-items={style?.alignY} class="flex">
+				<Image class="items-center rounded-lg p-5 " {image} />
 			</div>
 		</Card.Header>
 		<Card.Content class="h-full">

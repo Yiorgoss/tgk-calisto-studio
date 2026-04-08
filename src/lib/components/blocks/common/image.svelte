@@ -6,6 +6,6 @@
 	const { blockData }: { blockData: IImage } = $props();
 </script>
 
-<div id="image-block" class="h-full w-full">
+<div id="image-block" class="h-fit w-fit">
 	<Image class="" image={blockData.image} />
 </div>

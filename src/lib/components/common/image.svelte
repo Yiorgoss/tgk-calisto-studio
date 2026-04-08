@@ -23,7 +23,7 @@
 		fetchpriority?: 'low' | 'auto' | 'high' | null | undefined;
 	} = $props();
 
-	let { style, alt, ignoreSizes, animation, arr } = $derived(image || {});
+	let { style, mobileStyle, alt, ignoreSizes, animation, arr } = $derived(image || {});
 
 	let asset = $derived((image?.url as Asset) || {});
 	onMount(() => cb && cb());
@@ -78,7 +78,7 @@
 		style:padding={mobile.current ? mobileStyle?.padding : style?.padding}
 		style:border-radius={style?.borderRadius}
 	>
-		<div class:hidden={loaded} class="absolute inset-0 bg-white/40 animate-pulse"></div>
+		<div class:hidden={loaded} class="absolute inset-0 bg-white/60 animate-pulse"></div>
 		{#if ignoreSizes}
 			<img
 				style:object-fit={style?.objectFit}
