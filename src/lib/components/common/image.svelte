@@ -71,7 +71,7 @@
 {#if asset?.sizes}
 	<div
 		class:bg-none={loaded}
-		class="relative grid grid-cols-1 grid-rows-1 place-items-center h-full w-full overflow-hidden bg-(image:--placeholder) bg-center bg-cover bg-no-repeat"
+		class="relative grid grid-cols-1 grid-rows-1 place-items-center h-full w-full bg-(image:--placeholder) bg-center bg-cover bg-no-repeat"
 		style:--placeholder={`url(${site.storage}/${asset?.sizes?.placeholder?.filename})`}
 		style:height={style?.height}
 		style:width={style?.width}

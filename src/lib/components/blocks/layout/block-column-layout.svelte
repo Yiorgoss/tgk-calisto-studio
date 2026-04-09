@@ -51,7 +51,7 @@
 
 	const widthClass = $derived(normaliseWidth(layout ?? 'oneColumn'));
 
-	const mobile = new MediaQuery('max-width: 480px');
+	const mobile = new MediaQuery('max-width: 600px');
 </script>
 
 <section
@@ -65,7 +65,7 @@
 	<div class="absolute inset-0">
 		<Image image={blockData?.bgImage} />
 	</div>
-	<div class="relative isolate row-start-1 col-start-1">
+	<div class="row-start-1 col-start-1">
 		{#each blockData?.stickerList ?? [] as sticker}
 			<Sticker data={sticker.s} />
 		{/each}
@@ -74,7 +74,7 @@
 		style:overflow={style?.overflow}
 		style:gap={style?.gap}
 		style:padding={mobile.current ? mobileStyle?.padding : style?.padding}
-		style:flex-direction={mobile.current && mobileStyle?.flexDirection}
+		style:flex-direction={mobile.current ? (mobileStyle?.flexDirection ?? 'column') : 'row'}
 		class:flex-wrap={layout == 'threeColumns'}
 		class="col-start-1 overflow-hidden row-start-1 flex z-10 container gap-0 md:gap-10 justify-center items-center md:items-stretch h-full flex-col md:flex-row mx-auto"
 		{@attach animate({ animation })}
@@ -83,7 +83,10 @@
 			style:align-items={style?.alignY}
 			style:justify-content={style?.alignX}
 			style:display="flex"
-			class={cn('animate-child w-full flex grow-1 items-center md:items-stretch', widthClass[0])}
+			class={cn(
+				'animate-child w-full flex grow justify-center items-center md:items-stretch',
+				widthClass[0]
+			)}
 		>
 			{#if columnOne && columnOne.length != 0}
 				<RenderBlocks blockData={columnOne[0]} />
@@ -96,7 +99,7 @@
 				style:justify-content={style?.alignX}
 				style:display="flex"
 				class={cn(
-					'animate-child w-full h-full flex grow-2 justify-center items-center md:items-stretch',
+					'animate-child w-full flex grow justify-center items-center md:items-stretch',
 					widthClass[1]
 				)}
 			>
@@ -109,7 +112,7 @@
 				style:justify-content={style?.alignX}
 				style:display="flex"
 				class={cn(
-					'animate-child w-full flex grow-3 justify-center items-center md:items-stretch',
+					'animate-child w-full flex grow justify-center items-center md:items-stretch',
 					widthClass[2]
 				)}
 			>

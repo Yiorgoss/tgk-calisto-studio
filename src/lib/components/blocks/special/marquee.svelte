@@ -14,6 +14,8 @@
 		link
 		//  animation
 	} = $derived(blockData);
+
+	$inspect(blockData);
 </script>
 
 <section
@@ -34,10 +36,8 @@
 			class="marquee-default w-max flex justify-center items-center gap-x-10"
 		>
 			{#each [...items!, ...items!] as { image, text }, i}
-				<div aria-hidden={i > items!.length} style:height class="flex justify-center items-center">
-					<Image {image} class="object-contain h-full " />
-				</div>
-				<div style:font aria-hidden={i > items!.length} class="text-nowrap">{text}</div>
+				<Image {image} class="h-full" />
+				<div style:font class="text-nowrap">{text}</div>
 			{/each}
 		</div>
 	</a>

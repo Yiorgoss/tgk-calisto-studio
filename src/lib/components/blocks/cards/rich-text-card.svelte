@@ -16,7 +16,7 @@
 	<Card.Root
 		style={`background:${background};border:${border};border-radius:${borderRadius};width:${width};max-width:${width && 'unset'};`}
 		class={cn(
-			'overflow-hidden relative h-full max-w-xs w-full hover:scale-105 transition-transform duration-300',
+			'relative h-full max-w-xs w-full hover:scale-105 transition-transform duration-300',
 			hasShadow && 'shadow-none'
 		)}
 	>

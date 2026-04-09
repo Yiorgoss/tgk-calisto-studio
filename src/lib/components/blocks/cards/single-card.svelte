@@ -2,7 +2,6 @@
 	import type { ISingleCard, Page } from '@payload-types';
 	import * as Card from '@/components/ui/card';
 	import { RichTextRender } from '../rich-text';
-	import Button from '@/components/common/button.svelte';
 	import Image from '@/components/common/image.svelte';
 
 	const { blockData }: { blockData: ISingleCard } = $props();
@@ -12,7 +11,7 @@
 </script>
 
 <Card.Root
-	style={`background:${style?.background};border:${style?.border};border-radius:${style?.borderRadius};max-width:${style?.maxWidth};`}
+	style={`background:${style?.background};border:${style?.border};border-radius:${style?.borderRadius};width:${style?.width};max-width:${style?.maxWidth};`}
 	class="-full w-full"
 >
 	<a href={(link as Page)?.slug} aria-hidden={!(link as Page)?.slug}>
