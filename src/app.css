@@ -174,13 +174,13 @@
 }
 
 @layer base {
-  * {
+  /* * {
     @apply border-border outline-ring/50;
-  }
+  } */
 
-  body {
+  /* body {
     @apply bg-background text-foreground;
-  }
+  } */
 }
 
 /* animate word/child are unique global classes that are required for more complex animations.

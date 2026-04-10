@@ -57,6 +57,7 @@
 <section
 	id="block-column-layout"
 	style:height={style?.height}
+	style:min-height={style?.minHeight}
 	style:background={style?.color}
 	style:border-radius={style?.borderRadius}
 	class:container={style?.container}
