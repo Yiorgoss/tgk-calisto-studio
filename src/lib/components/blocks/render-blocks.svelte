@@ -1,13 +1,17 @@
 <script lang="ts">
-	//  import { blockList } from '$lib/components/blocks';
-	import { onMount, type ComponentType } from 'svelte';
-
 	const {
 		blockData,
 		className,
 		cb,
-		hasLocaleSwitch
-	}: { blockData: any; className?: string; cb?: () => void; hasLocaleSwitch?: boolean } = $props();
+		hasLocaleSwitch,
+		...restProps
+	}: {
+		blockData: any;
+		className?: string;
+		cb?: () => void;
+		hasLocaleSwitch?: boolean;
+		restProps?: Record<string, unknown>;
+	} = $props();
 
 	// FIX figure out a glob match this will become unmnageable at some point
 	const dynamicResolveBlock = async ({ blockName }: { blockName: string }) => {
@@ -91,5 +95,5 @@
 
 {#if calculatedBlockType && calculatedBlockType.default}
 	{@const Block = calculatedBlockType.default}
-	<Block {className} {blockData} {cb} {hasLocaleSwitch} />
+	<Block {className} {blockData} {cb} {hasLocaleSwitch} {...restProps} />
 {/if}

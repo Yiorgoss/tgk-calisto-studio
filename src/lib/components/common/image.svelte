@@ -18,7 +18,7 @@
 		image: IImage['image'];
 		class?: string;
 		cb?: () => void;
-		sizes?: 'string';
+		sizes?: string;
 		loading?: 'eager' | 'lazy' | null | undefined;
 		fetchpriority?: 'low' | 'auto' | 'high' | null | undefined;
 	} = $props();
@@ -31,18 +31,16 @@
 	const mobile = new MediaQuery('max-width: 480px');
 	let loaded = $state(false);
 
-	let { srcset, sizes } = $derived.by(() => {
-		let { srcset, sizes } = Object.values(asset?.sizes ?? {}).reduce(
+	let { srcset } = $derived.by(() => {
+		let { srcset } = Object.values(asset?.sizes ?? {}).reduce(
 			(acc: any, cur: any) => ({
-				srcset: `${acc.srcset ?? ''} ${site.storage}/${encodeURI(cur.filename)} ${cur.width}w,`,
-				sizes: `${acc.sizes ?? ''} (max-width: ${cur.width}px) 100vw, `
+				srcset: `${acc.srcset ?? ''} ${site.storage}/${encodeURI(cur.filename)} ${cur.width}w,`
 			}),
 			{ srcset: '', sizes: '' }
 		);
 		srcset += `${site.storage}/${encodeURI(asset?.filename ?? '')} ${asset?.width}w`;
-		sizes += `${asset?.width}px`; //defaultvalue
 
-		return { srcset, sizes };
+		return { srcset };
 	});
 </script>
 
@@ -105,7 +103,7 @@
 				)}
 				style:opacity={loaded ? '100%' : '0'}
 				alt={alt ?? ''}
-				sizes={_sizes ?? sizes}
+				sizes={_sizes ?? style?.sizes ?? '100vw'}
 				{srcset}
 				{loading}
 				{@attach animate({ animation })}

@@ -52,6 +52,13 @@
 	const widthClass = $derived(normaliseWidth(layout ?? 'oneColumn'));
 
 	const mobile = new MediaQuery('max-width: 600px');
+	const sizes = $derived(
+		layout == 'oneColumn'
+			? '100vw'
+			: layout == 'threeColumns'
+				? '(max-width:600px) 100vw, 33vw'
+				: '(max-width:600px) 100vw, 50vw'
+	);
 </script>
 
 <section
@@ -90,7 +97,7 @@
 			)}
 		>
 			{#if columnOne && columnOne.length != 0}
-				<RenderBlocks blockData={columnOne[0]} />
+				<RenderBlocks blockData={columnOne[0]} {sizes} />
 			{/if}
 		</div>
 		{#if columnTwo && columnTwo.length != 0}
@@ -104,7 +111,7 @@
 					widthClass[1]
 				)}
 			>
-				<RenderBlocks blockData={columnTwo[0]} />
+				<RenderBlocks blockData={columnTwo[0]} {sizes} />
 			</div>
 		{/if}
 		{#if columnThree && columnThree.length != 0}
@@ -117,7 +124,7 @@
 					widthClass[2]
 				)}
 			>
-				<RenderBlocks blockData={columnThree[0]} />
+				<RenderBlocks blockData={columnThree[0]} {sizes} />
 			</div>
 		{/if}
 	</div>
