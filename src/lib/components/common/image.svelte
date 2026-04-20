@@ -36,7 +36,7 @@
 			(acc: any, cur: any) => ({
 				srcset: `${acc.srcset ?? ''} ${site.storage}/${encodeURI(cur.filename)} ${cur.width}w,`
 			}),
-			{ srcset: '', sizes: '' }
+			{ srcset: '' }
 		);
 		srcset += `${site.storage}/${encodeURI(asset?.filename ?? '')} ${asset?.width}w`;
 
@@ -103,7 +103,7 @@
 				)}
 				style:opacity={loaded ? '100%' : '0'}
 				alt={alt ?? ''}
-				sizes={_sizes ?? style?.sizes ?? '100vw'}
+				sizes={_sizes ?? style?.sizes ?? `min(${asset?.width}px, 100vw)`}
 				{srcset}
 				{loading}
 				{@attach animate({ animation })}
