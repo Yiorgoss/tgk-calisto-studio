@@ -92,7 +92,7 @@
 			style:justify-content={style?.alignX}
 			style:display="flex"
 			class={cn(
-				'animate-child w-full flex grow justify-center items-center md:items-stretch',
+				'animate-child w-full h-full flex grow justify-center items-center md:items-stretch',
 				widthClass[0]
 			)}
 		>
@@ -107,7 +107,7 @@
 				style:justify-content={style?.alignX}
 				style:display="flex"
 				class={cn(
-					'animate-child w-full flex grow justify-center items-center md:items-stretch',
+					'animate-child w-full h-full flex grow justify-center items-center md:items-stretch',
 					widthClass[1]
 				)}
 			>
@@ -120,7 +120,7 @@
 				style:justify-content={style?.alignX}
 				style:display="flex"
 				class={cn(
-					'animate-child w-full flex grow justify-center items-center md:items-stretch',
+					'animate-child w-full h-full  flex grow justify-center items-center md:items-stretch',
 					widthClass[2]
 				)}
 			>

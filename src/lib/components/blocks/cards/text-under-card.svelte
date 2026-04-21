@@ -8,9 +8,11 @@
 </script>
 
 <section id="TextUnderCard-block" class="w-full h-full max-w-sm">
-	<Card.Root class="max-w-sm w-full h-full bg-transparent border-0 shadow-none text-foreground">
-		<div class="w-full h-full">
-			<Image class="h-100" image={blockData?.image} />
+	<Card.Root
+		class="max-w-sm w-full h-full bg-transparent items-start justify-start border-0 shadow-none text-foreground"
+	>
+		<div class="w-full">
+			<Image class="h-100 " image={blockData?.image} />
 		</div>
 		<div class="">
 			<RichTextRender richText={blockData?.richText} />
