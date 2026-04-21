@@ -83,6 +83,8 @@
 		style:gap={style?.gap}
 		style:padding={mobile.current ? mobileStyle?.padding : style?.padding}
 		style:flex-direction={mobile.current ? (mobileStyle?.flexDirection ?? 'column') : 'row'}
+		style:align-items={style?.alignY}
+		style:justify-content={style?.alignX}
 		class:flex-wrap={layout == 'threeColumns'}
 		class="col-start-1 overflow-hidden row-start-1 flex z-10 container gap-0 md:gap-10 justify-center items-center md:items-stretch h-full flex-col md:flex-row mx-auto"
 		{@attach animate({ animation })}
@@ -92,7 +94,7 @@
 			style:justify-content={style?.alignX}
 			style:display="flex"
 			class={cn(
-				'animate-child w-full h-full flex grow justify-center items-center md:items-stretch',
+				'animate-child w-full flex grow justify-center items-center md:items-stretch',
 				widthClass[0]
 			)}
 		>
@@ -107,7 +109,7 @@
 				style:justify-content={style?.alignX}
 				style:display="flex"
 				class={cn(
-					'animate-child w-full h-full flex grow justify-center items-center md:items-stretch',
+					'animate-child w-full flex grow justify-center items-center md:items-stretch',
 					widthClass[1]
 				)}
 			>
@@ -120,7 +122,7 @@
 				style:justify-content={style?.alignX}
 				style:display="flex"
 				class={cn(
-					'animate-child w-full h-full  flex grow justify-center items-center md:items-stretch',
+					'animate-child w-full flex grow justify-center items-center md:items-stretch',
 					widthClass[2]
 				)}
 			>
