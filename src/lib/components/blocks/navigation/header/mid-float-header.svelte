@@ -17,9 +17,7 @@
 
 	const { locale } = page.params;
 
-	let open = $state(true);
-	const mobile = new MediaQuery('max-width: 480px');
-	$inspect({ mobile: mobile.current });
+	let open = $state(false);
 </script>
 
 <section id="MidFloadHeader" class="">
@@ -59,7 +57,7 @@
 					{/each}
 					{#if Object.entries(supportedLocales).length > 0}
 						<Nav.Item class="px-2">
-							<LocaleSwitcher />
+							<LocaleSwitcher useFlag />
 						</Nav.Item>
 					{/if}
 				</Nav.List>
@@ -98,7 +96,7 @@
 										{@render nestedLink({ nLink })}
 									{/each}
 									<Nav.Item class="">
-										<LocaleSwitcher />
+										<LocaleSwitcher useFlag />
 									</Nav.Item>
 								</div>
 							</Nav.List>

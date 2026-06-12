@@ -16,4 +16,5 @@ export const supportedLocales = {
 } as { [key: string]: string }
 
 export type SupportedLocalesType = typeof supportedLocales
+export type SupportedLocalesKeys = keyof typeof supportedLocales
 

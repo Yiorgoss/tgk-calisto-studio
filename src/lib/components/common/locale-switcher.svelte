@@ -1,19 +1,17 @@
 <script lang="ts">
-	import { supportedLocales, defaultLocale } from '@/config';
+	import { supportedLocales, type SupportedLocalesKeys, defaultLocale } from '@/config';
 	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
-	import * as NavigationMenu from '@/components/ui/navigation-menu';
 	import { page } from '$app/state';
-	import { onMount } from 'svelte';
-	import { invalidate, invalidateAll, goto } from '$app/navigation';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import Icon from './icon.svelte';
 	import { Button } from '@/components/ui/button';
 	import Spinner from './spinner.svelte';
+	import Flag from './flag.svelte';
 
+	const { useFlag = false }: { useFlag?: boolean } = $props();
 	const { locale, slug } = $derived(page.params);
 	let disabled = $state(false);
 
-	let currentLang = $derived(supportedLocales[locale] ?? supportedLocales[defaultLocale]);
+	let currentLang = $derived(supportedLocales[locale ?? ''] ?? supportedLocales[defaultLocale]);
 
 	$effect(() => {
 		document.documentElement.lang = locale ?? defaultLocale;
@@ -30,7 +28,7 @@
 					class="font-light py-2 px-2 text-xs flex justify-center gap-2 items-center"
 					{disabled}
 				>
-					<span class="">{currentLang}</span>
+					{@render flagOrLocale({ locale })}
 					{#if disabled}
 						<Spinner class="size-4" />
 					{:else}
@@ -50,12 +48,13 @@
 									disabled = false;
 								}, 1000);
 							}}
+							class="w-full"
 							href={`/${key}/${slug}`}
 							variant="ghost"
 							lang={key}
 							hreflang={key}
 						>
-							{value}
+							{@render flagOrLocale({ locale: key, text: value })}
 						</Button>
 					</DropdownMenu.Item>
 				{/each}
@@ -63,3 +62,12 @@
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 {/key}
+
+{#snippet flagOrLocale({ locale, text }: { locale?: SupportedLocalesKeys; text?: String })}
+	{console.log(locale)}
+	{#if useFlag}
+		<Flag flag={locale} />
+	{:else}
+		<span class="">{text}</span>
+	{/if}
+{/snippet}
