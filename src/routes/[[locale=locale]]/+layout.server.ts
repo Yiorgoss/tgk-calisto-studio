@@ -13,8 +13,10 @@ export const load: LayoutServerLoad = async (args) => {
   const { params, fetch } = args
 
   const locale = params.locale ?? defaultLocale
+  const layoutUrl = `${site.CMS}/api/tenants?where[domain][equals]=${site.domainName}&select[id]=true&select[nav]=true&depth=1&locale=${locale}`
+  if (dev) console.log({ layoutUrl })
 
-  const response = await fetch(`${site.CMS}/api/tenants?where[domain][equals]=${site.domainName}&select[id]=true&select[nav]=true&depth=1&locale=${locale}`) // must select id for live preview
+  const response = await fetch(layoutUrl) // must select id for live preview
     .then((res: any) => res.json())
     .then((json: any) => json.docs[0])
     .catch((err: any) => error(404, { message: err }))

@@ -40,7 +40,7 @@
 		style:text-align={mobile.current && richText?.mobileStyle?.textAlign}
 		class=""
 	>
-		{#if richText.animation.type}
+		<!--  {#if richText.animation.type}
 			{#await import('./animated.svelte') then B: any}
 				{@const Block = B.default}
 				<Block
@@ -50,13 +50,9 @@
 					html={html ?? ''}
 				/>
 			{/await}
-		{:else}
-			<DefaultRichText
-				overrides={cn(defaults, overrides)}
-				style={richText.style}
-				html={html ?? ''}
-			/>
-		{/if}
+		{:else}  -->
+		<DefaultRichText overrides={cn(defaults, overrides)} style={richText.style} html={html ?? ''} />
+		<!--  {/if}  -->
 	</div>
 {/if}
 <!--  {/key}  -->

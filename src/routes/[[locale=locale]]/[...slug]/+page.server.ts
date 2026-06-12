@@ -13,7 +13,8 @@ export const load: PageServerLoad = async (args) => {
   const slug = params.slug
 
   const url = `${site.CMS}/api/pages?&depth=2&locale=${locale}&where[tenant-domain][equals]=${site.domainName}&where[slug][equals]=${slug}`
-  if (dev) console.log(`url=${url}`)
+  if (dev) console.log({ url })
+
   const data = await fetch(url,
     {
       headers: {

@@ -11,19 +11,21 @@
 		image,
 		class: className,
 		cb,
+		alt: altHardCoded,
 		sizes: _sizes,
 		loading = 'lazy',
 		fetchpriority = 'low'
 	}: {
 		image: IImage['image'];
 		class?: string;
+		alt?: string;
 		cb?: () => void;
 		sizes?: string;
 		loading?: 'eager' | 'lazy' | null | undefined;
 		fetchpriority?: 'low' | 'auto' | 'high' | null | undefined;
 	} = $props();
 
-	let { style, mobileStyle, alt, ignoreSizes, animation, arr } = $derived(image || {});
+	let { style, alt, mobileStyle, ignoreSizes, animation, arr } = $derived(image || {});
 
 	let asset = $derived((image?.url as Asset) || {});
 	onMount(() => cb && cb());
@@ -87,7 +89,7 @@
 					'object-cover w-full h-full col-start-1 row-start-1 ease-in-out transition-all duration-200',
 					className
 				)}
-				alt={alt ?? ''}
+				alt={alt ?? altHardCoded ?? ''}
 				{loading}
 				{fetchpriority}
 				{@attach animate({ animation })}
@@ -102,7 +104,7 @@
 					className
 				)}
 				style:opacity={loaded ? '100%' : '0'}
-				alt={alt ?? ''}
+				alt={alt ?? altHardCoded ?? ''}
 				sizes={_sizes ?? style?.sizes ?? `min(${asset?.width}px, 100vw)`}
 				{srcset}
 				{loading}

@@ -10,9 +10,10 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "bundler",
-		"types": [
-			"@cloudflare/workers-types/2023-07-01"
-		],
+		"types": ["@cloudflare/workers-types/2023-07-01"],
+		"alias": {
+			"@/": "./src/"
+		},
 		"plugins": [
 			{
 				"name": "typescript-svelte-plugin",
