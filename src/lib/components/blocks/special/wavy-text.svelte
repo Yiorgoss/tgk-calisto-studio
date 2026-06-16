@@ -9,11 +9,13 @@
 	});
 </script>
 
-<section
-	id="WavyText"
-	style:height={blockData?.style?.height}
-	style:width={blockData?.style?.width}
-	class="relative h-100 w-full overflow-hidden max-w-full"
->
-	<SVGRender name="wavy-text" class="absolute inset-0 z-10 w-full h-full" {data} />
-</section>
+<div class="h-[200vh]">
+	<section
+		id="WavyText"
+		style:height={blockData?.style?.height}
+		style:width={blockData?.style?.width}
+		class="relative h-100 w-full overflow-hidden max-w-full"
+	>
+		<SVGRender name="wavy-text" class="absolute inset-0 z-10 w-full h-full" {data} />
+	</section>
+</div>
