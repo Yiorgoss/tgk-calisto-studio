@@ -1,0 +1,25 @@
+<script lang="ts">
+	import type { ITGKLandingHome } from '@payload-types';
+	import Image from '@/components/common/image.svelte';
+	import { RichTextRender } from '../rich-text';
+
+	const { blockData }: { blockData: ITGKLandingHome } = $props();
+</script>
+
+<section id="TextImageSplit">
+	<div class="grid grid-cols-1 md:grid-cols-2 h-svh">
+		<div class="">
+			<Image image={blockData.imgLeft} class="" />
+		</div>
+		<div class="grid grid-cols-1 h-full w-full grid-rows-1">
+			<div class="col-start-1 row-start-1 h-full w-full">
+				<Image image={blockData.imgRight} class="object-left h-full" />
+			</div>
+			<div
+				class="col-start-1 row-start-1 h-full w-full flex bg-blue-300 justify-center items-center"
+			>
+				<RichTextRender overrides="" richText={blockData.richText} />
+			</div>
+		</div>
+	</div>
+</section>

@@ -9,7 +9,7 @@
 	const { blockData }: { blockData: IMarquee } = $props();
 	const {
 		items = [],
-		style: { font, background, color, height, border, padding, gap } = {},
+		style: { font, background, color, height, border, borderPosition, padding, gap } = {},
 		options,
 		link
 		//  animation
@@ -18,10 +18,11 @@
 
 <section
 	id="marquee-block"
-	style:border
+	style:border={borderPosition ?? border}
 	style:padding
 	style:background
 	style:color
+	style={borderPosition && `border-${borderPosition}:${border};`}
 	class:mask-none={!options?.maskEdges}
 	class="mask-l-from-90% mask-r-from-90% overflow-clip"
 >

@@ -8,6 +8,15 @@ const textState = {
   },
   background: {
     // ...defaultColors.background,
+    background: { css: { color: 'var(--background, #3a383b)' }, label: 'background' },
+    foreground: { css: { color: 'var(--foreground, #bbb5bd)' }, label: 'foreground' },
+    primary: { css: { color: 'var(--primary, #531970)' }, label: 'primary' },
+    secondary: { css: { color: 'var(--secondary, #6155cf )' }, label: 'secondary ' },
+    'chart-1': { label: 'chart-1 ', css: { color: 'var(--chart-1, #f54a00 )' } },
+    'chart-2': { label: 'chart-2 ', css: { color: 'var(--chart-2, #009689)' } },
+    'chart-3': { label: 'chart-3 ', css: { color: 'var(--chart-3, #104e64)' } },
+    'chart-4': { label: 'chart-4 ', css: { color: 'var(--chart-4, #ffba00)' } },
+    'chart-5': { label: 'chart-5 ', css: { color: 'var(--chart-5, #009528)' } },
   },
   color: {
     // ...defaultColors.text,
@@ -117,15 +126,15 @@ const textState = {
     },
   },
   themeColors: {
-    background: { css: { color: 'var(--background, #3a383b)' }, label: 'background' },
-    foreground: { css: { color: 'var(--foreground, #bbb5bd)' }, label: 'foreground' },
-    primary: { css: { color: 'var(--primary, #531970)' }, label: 'primary' },
-    secondary: { css: { color: 'var(--secondary, #6155cf )' }, label: 'secondary ' },
-    'chart-1': { label: 'chart-1 ', css: { color: 'var(--chart-1, #f54a00 )' } },
-    'chart-2': { label: 'chart-2 ', css: { color: 'var(--chart-2, #009689)' } },
-    'chart-3': { label: 'chart-3 ', css: { color: 'var(--chart-3, #104e64)' } },
-    'chart-4': { label: 'chart-4 ', css: { color: 'var(--chart-4, #ffba00)' } },
-    'chart-5': { label: 'chart-5 ', css: { color: 'var(--chart-5, #009528)' } },
+    background: { css: { background: 'var(--background, #3a383b)' }, label: 'background' },
+    foreground: { css: { background: 'var(--foreground, #bbb5bd)' }, label: 'foreground' },
+    primary: { css: { background: 'var(--primary, #531970)' }, label: 'primary' },
+    secondary: { css: { background: 'var(--secondary, #6155cf )' }, label: 'secondary ' },
+    'chart-1': { label: 'chart-1 ', css: { background: 'var(--chart-1, #f54a00 )' } },
+    'chart-2': { label: 'chart-2 ', css: { background: 'var(--chart-2, #009689)' } },
+    'chart-3': { label: 'chart-3 ', css: { background: 'var(--chart-3, #104e64)' } },
+    'chart-4': { label: 'chart-4 ', css: { background: 'var(--chart-4, #ffba00)' } },
+    'chart-5': { label: 'chart-5 ', css: { background: 'var(--chart-5, #009528)' } },
   },
 }
 
@@ -150,50 +159,3 @@ export function objToCSS(node) {
   return providedCSSString
 }
 
-// export const TextHTMLConverterAsync: HTMLConvertersAsync<SerializedTextNode> = {
-//   text: ({ node }) => {
-//     let text = node.text
-
-//     const style = {}
-//     if (node.$) {
-//       Object.entries(textState).forEach(([stateKey, stateValues]) => {
-//         const stateValue = node.$ && (node.$[stateKey] as TextStateKeys)
-//         if (stateValue && stateValues[stateValue]) {
-//           //@ts-ignore
-//           Object.assign(style, stateValues[stateValue].css)
-//         }
-//       })
-//     }
-//     let providedCSSString = ''
-//     for (const key of Object.keys(style)) {
-//       // @ts-expect-error we're iterating over the keys of the object
-//       providedCSSString += `${key}: ${style[key]};`
-//     }
-
-//     text = `<span style="${providedCSSString}">${text}</span>`
-
-//     if (node.format & NodeFormat.IS_BOLD) {
-//       text = `<strong ">${text}</strong>`
-//     }
-//     if (node.format & NodeFormat.IS_ITALIC) {
-//       text = `<em >${text}</em>`
-//     }
-//     if (node.format & NodeFormat.IS_STRIKETHROUGH) {
-//       text = `<span style="text-decoration: line-through;">${text}</span>`
-//     }
-//     if (node.format & NodeFormat.IS_UNDERLINE) {
-//       text = `<span style="text-decoration: underline;">${text}</span>`
-//     }
-//     if (node.format & NodeFormat.IS_CODE) {
-//       text = `<code >${text}</code>`
-//     }
-//     if (node.format & NodeFormat.IS_SUBSCRIPT) {
-//       text = `<sub >${text}</sub>`
-//     }
-//     if (node.format & NodeFormat.IS_SUPERSCRIPT) {
-//       text = `<sup >${text}</sup>`
-//     }
-
-//     return text
-//   },
-// }

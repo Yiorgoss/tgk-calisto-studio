@@ -6,8 +6,6 @@
 
 	const { blockData }: { blockData: ISingleCard } = $props();
 	const { richText, image, link, style } = $derived(blockData || {});
-
-	$inspect({ blockData, style });
 </script>
 
 <Card.Root

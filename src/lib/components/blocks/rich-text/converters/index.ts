@@ -1,38 +1,23 @@
 import type { IPill, ICursiveText } from '@payload-types';
 import { objToCSS } from './text-state';
 import { customText } from "./text"
+import { divider } from "./divider"
 import { resolveID, richTextImg } from '@/utils';
 import { richTextBtn } from '@/utils/payload-utils';
 import { site } from '@/config';
 
 
-// import {
-//   defaultColors,
-//   NodeFormat,
-//   type DefaultNodeTypes,
-//   type SerializedBlockNode,
-//   type SerializedInlineBlockNode
-// } from '@payloadcms/richtext-lexical';
-
-// import { type HTMLConvertersFunctionAsync } from '@payloadcms/richtext-lexical/html-async';
-
-// import { animate, motionValue, svgEffect } from 'motion';
-
-// export type NodeTypes =
-//   | DefaultNodeTypes
-//   | SerializedInlineBlockNode<IPill | ICursiveText>
-//   | SerializedBlockNode;
-
-// export type htmlConvertersType = typeof htmlConverters
-
 export const syncConverters: any = ({ defaultConverters }) => ({
   ...defaultConverters,
   text: customText,
-
 })
+
 export const htmlConverters: any = ({ defaultConverters }) => ({
   ...defaultConverters,
   text: customText,
+  blocks: {
+    divider
+  },
   inlineBlocks: {
     // Each key should match your inline block's slug
     listMarkerIcon: async (args: any) => {

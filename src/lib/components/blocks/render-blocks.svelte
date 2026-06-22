@@ -56,6 +56,8 @@
 				return import('./navigation/header/mid-float-header.svelte');
 			case 'richTextFooter':
 				return import('./navigation/footer/rich-text-footer.svelte');
+			case 'googleMapFooter':
+				return import('./navigation/footer/google-map-footer.svelte');
 			case 'contactForm':
 				return import('./forms/contact-form.svelte');
 			case 'scrollGrowLanding':
@@ -84,6 +86,10 @@
 				return import('./special/flex-item.svelte');
 			case 'textUnderCard':
 				return import('./cards/text-under-card.svelte');
+			case 'textImageSplit':
+				return import('./tgk/text-image-split.svelte');
+			case 'tgkLandingHome':
+				return import('./tgk/tgk-landing-home.svelte');
 		}
 	};
 

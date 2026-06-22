@@ -42,10 +42,29 @@ const textState = {
     'multi-lingual-sans': { label: "sans-multi-lingual", css: { 'font-family': 'var(--multi-lingual-sans, sans)' } },
   },
   background: {
-    ...defaultColors.background,
+    background: { css: { background: 'var(--background, #3a383b)' }, label: 'background' },
+    foreground: { css: { background: 'var(--foreground, #bbb5bd)' }, label: 'foreground' },
+    primary: { css: { background: 'var(--primary, #531970)' }, label: 'primary' },
+    'secondary': { css: { background: 'var(--secondary, #6155cf )' }, label: 'secondary' },
+    'chart-1': { label: 'chart-1 ', css: { background: 'var(--chart-1, #f54a00 )' } },
+    'chart-2': { label: 'chart-2 ', css: { background: 'var(--chart-2, #009689)' } },
+    'chart-3': { label: 'chart-3 ', css: { background: 'var(--chart-3, #104e64)' } },
+    'chart-4': { label: 'chart-4 ', css: { background: 'var(--chart-4, #ffba00)' } },
+    'chart-5': { label: 'chart-5 ', css: { background: 'var(--chart-5, #009528)' } },
   },
   color: {
     ...defaultColors.text,
+  },
+  themeColors: {
+    background: { css: { color: 'var(--background, #3a383b)' }, label: 'background' },
+    foreground: { css: { color: 'var(--foreground, #bbb5bd)' }, label: 'foreground' },
+    primary: { css: { color: 'var(--primary, #531970)' }, label: 'primary' },
+    'secondary': { css: { color: 'var(--secondary, #6155cf )' }, label: 'secondary' },
+    'chart-1': { label: 'chart-1 ', css: { color: 'var(--chart-1, #f54a00 )' } },
+    'chart-2': { label: 'chart-2 ', css: { color: 'var(--chart-2, #009689)' } },
+    'chart-3': { label: 'chart-3 ', css: { color: 'var(--chart-3, #104e64)' } },
+    'chart-4': { label: 'chart-4 ', css: { color: 'var(--chart-4, #ffba00)' } },
+    'chart-5': { label: 'chart-5 ', css: { color: 'var(--chart-5, #009528)' } },
   },
   fontWeight: {
     black: { css: { 'font-weight': '900' }, label: 'black' },
@@ -150,17 +169,6 @@ const textState = {
       },
       label: 'text-xs',
     },
-  },
-  themeColors: {
-    background: { css: { color: 'var(--background, #3a383b)' }, label: 'background' },
-    foreground: { css: { color: 'var(--foreground, #bbb5bd)' }, label: 'foreground' },
-    primary: { css: { color: 'var(--primary, #531970)' }, label: 'primary' },
-    'secondary': { css: { color: 'var(--secondary, #6155cf )' }, label: 'secondary' },
-    'chart-1': { label: 'chart-1 ', css: { color: 'var(--chart-1, #f54a00 )' } },
-    'chart-2': { label: 'chart-2 ', css: { color: 'var(--chart-2, #009689)' } },
-    'chart-3': { label: 'chart-3 ', css: { color: 'var(--chart-3, #104e64)' } },
-    'chart-4': { label: 'chart-4 ', css: { color: 'var(--chart-4, #ffba00)' } },
-    'chart-5': { label: 'chart-5 ', css: { color: 'var(--chart-5, #009528)' } },
   },
 }
 

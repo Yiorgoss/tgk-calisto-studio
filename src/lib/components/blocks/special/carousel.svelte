@@ -23,21 +23,23 @@
 	const medium = new MediaQuery('(min-width: 640px) and (max-width: 1024px)');
 </script>
 
-<Carousel.Root
-	opts={{ duration: 70, loop: !!options?.loop, align: 'start', containScroll: false }}
-	setApi={(emblaApi: CarouselAPI | undefined) => (api = emblaApi)}
->
-	<Carousel.Content class="flex max-w-screen w-full md:max-w-sm lg:max-w-lg items-stretch ">
-		{#each items ?? [] as item}
-			<Carousel.Item class="max-w-md [&_img]:h-[300px] self-stretch lg:max-w-lg">
-				<RenderBlocks blockData={item} />
-			</Carousel.Item>
-		{/each}
-	</Carousel.Content>
-	<div class="hidden md:block">
-		<Carousel.Previous />
-	</div>
-	<div class="hidden md:block">
-		<Carousel.Next />
-	</div>
-</Carousel.Root>
+<div class="relative container">
+	<Carousel.Root
+		opts={{ duration: 70, loop: !!options?.loop, align: 'start', containScroll: false }}
+		setApi={(emblaApi: CarouselAPI | undefined) => (api = emblaApi)}
+	>
+		<Carousel.Content class="flex container w-full md:max-w-sm lg:max-w-lg items-stretch ">
+			{#each items ?? [] as item}
+				<Carousel.Item class="max-w-md [&_img]:h-[300px] self-stretch lg:max-w-lg">
+					<RenderBlocks blockData={item} />
+				</Carousel.Item>
+			{/each}
+		</Carousel.Content>
+		<div class="hidden md:block">
+			<Carousel.Previous />
+		</div>
+		<div class="hidden md:block">
+			<Carousel.Next />
+		</div>
+	</Carousel.Root>
+</div>
