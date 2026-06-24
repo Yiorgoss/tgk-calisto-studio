@@ -14,9 +14,10 @@
 
 	const { image, left, right } = $derived(blockData);
 
-	const { locale } = page.params;
+	const { locale, slug } = page.params;
 
 	let open = $state(false);
+		
 </script>
 
 <section id="MidFloadHeader" class="">
@@ -24,25 +25,34 @@
 		style:inset={blockData.style?.inset}
 		class="fixed top-2 flex justify-center w-screen z-30 h-(--header-height) px-2 md:px-0"
 	>
-		<div class="container w-full h-full">
+		<div class="container w-full h-full md:max-w-full md:px-2 lg:container">
 			<!-- desktop -->
 			<Nav.Root
 				viewport={false}
+				openOnHover={false} 
 				orientation="horizontal"
 				class={cn(
-					'px-0 md:px-10 bg-background shadow-xl max-w-full rounded-theme w-full items-center justify-between md:flex'
+					'px-0 lg:px-10 mx-auto bg-background shadow-xl max-w-full rounded-theme w-full items-center justify-center md:flex'
 				)}
 			>
-				<Nav.List class="hidden md:grid grid-cols-7 justify-items-center items-center ">
-					{#each left ?? [] as { nLink }}
-						{@render nestedLink({ nLink })}
-					{/each}
-					<Nav.Item>
+				<Nav.List class="mx-auto hidden md:flex justify-around items-center ">
+					<div class="flex grow shrink basis-0 justify-between items-center w-fit ">
+						{#if Object.entries(supportedLocales).length > 0}
+							<Nav.Item class="px-2">
+								<LocaleSwitcher useFlag />
+							</Nav.Item>
+						{/if}
+						{#each left ?? [] as { nLink }}
+							{@render nestedLink({ nLink })}
+						{/each}
+					</div>
+					<!--  careful with the magic flex basis number!!  -->
+					<Nav.Item class="grow-0 shrink-1 basis-40 lg:basis-80">
 						<Nav.Link href={`/${locale ?? ''}`} aria-label="home page" class="">
-							<div class="h-(--header-height) lg:p-2 md:p-4 w-auto">
+							<div class="h-(--header-height) lg:p-2 md:p-0 w-auto">
 								<Image
 									alt="link to homepage"
-									class="p-2 object-contain"
+									class="p-2 object-contain w-full h-auto"
 									{image}
 									sizes="500px"
 									fetchpriority="high"
@@ -51,28 +61,25 @@
 							</div>
 						</Nav.Link>
 					</Nav.Item>
-					{#each right ?? [] as { nLink }}
-						{@render nestedLink({ nLink })}
-					{/each}
-					{#if Object.entries(supportedLocales).length > 0}
-						<Nav.Item class="px-2">
-							<LocaleSwitcher useFlag />
-						</Nav.Item>
-					{/if}
+					<div class="flex grow shrink basis-0 justify-between items-center">
+						{#each right ?? [] as { nLink }}
+							{@render nestedLink({ nLink })}
+						{/each}
+					</div>
 				</Nav.List>
 				<!-- mobile -->
 				<div class="flex w-full h-full items-center justify-end md:hidden">
 					<Sheet.Root bind:open>
 						<div
 							class={cn(
-								'bg-background flex justify-between rounded-theme items-center h-full w-full transition-transform ease-out duration-200 shadow-xl'
+								'bg-background py-10 px-4 flex justify-between rounded-theme items-center h-full w-full transition-transform ease-out duration-200 shadow-xl'
 							)}
 						>
 							<a href={`/${locale ?? ''}`} aria-label="home page" class="h-full px-2">
 								<div class="h-full p-2 lg:p-2 md:p-4">
 									<!--  max width needed on picture to prevent wierd img grow on safari  -->
 									<Image
-										class="object-contain h-full max-w-(--header-height)"
+										class="object-contain h-full max-w-50"
 										loading="eager"
 										{image}
 									/>
@@ -94,7 +101,7 @@
 									{#each [...left, ...right] as { nLink }}
 										{@render nestedLink({ nLink })}
 									{/each}
-									<Nav.Item class="py-2 px-4">
+									<Nav.Item class="py-2 ">
 										<LocaleSwitcher useFlag />
 									</Nav.Item>
 								</div>
@@ -108,26 +115,29 @@
 </section>
 
 {#snippet nestedLink({ nLink }: { nLink: INestedLink })}
-	<Nav.Item class="py-2 px-4">
-		{#if nLink.arr.length == 1}
-			<Nav.Link class="">
-				{#snippet child()}
-					<Button class="py-2 px-0 h-auto" link={nLink.arr[0].link} />
-				{/snippet}
-			</Nav.Link>
-		{:else}
-			<Nav.Trigger class="">{nLink.name}</Nav.Trigger>
-			<Nav.Content class="" data-motion={false}>
-				<ul class=" flex flex-col gap-1 md:w-30 lg:w-40">
-					{#each nLink.arr ?? [] as { link }}
-						<Nav.Link>
-							{#snippet child()}
-								<Button class="py-2 h-auto" {link} />
-							{/snippet}
-						</Nav.Link>
-					{/each}
-				</ul>
-			</Nav.Content>
-		{/if}
-	</Nav.Item>
+	{#if nLink}
+		{@const activePage = nLink.arr[0]?.slug?.split("/")[0] == slug?.split("/")[0] }
+		<Nav.Item class="py-2 px-0 w-fit">
+			{#if nLink?.arr?.length == 1}
+				<Nav.Link class="">
+					{#snippet child()}
+						<Button class={cn("whitespace-normal m-0 w-full p-2 h-auto ", true && "text-(--chart-4)")} link={nLink.arr[0].link} />
+					{/snippet}
+				</Nav.Link>
+			{:else}
+				<Nav.Trigger class="w-fit p-2 h-auto whitespace-normal">{nLink.name}</Nav.Trigger>
+				<Nav.Content class="" >
+					<ul class=" flex flex-col gap-1 md:w-30 lg:w-40">
+						{#each nLink.arr ?? [] as { link }}
+							<Nav.Link>
+								{#snippet child()}
+									<Button class={cn("py-2 h-auto", activePage && "text-(--white)")} {link} />
+								{/snippet}
+							</Nav.Link>
+						{/each}
+					</ul>
+				</Nav.Content>
+			{/if}
+		</Nav.Item>
+	{/if}
 {/snippet}
