@@ -237,6 +237,6 @@ iconify-icon {
 
 @keyframes marquee {
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }

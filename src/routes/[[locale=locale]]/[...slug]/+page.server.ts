@@ -17,9 +17,9 @@ export const load: PageServerLoad = async (args) => {
 
   const data = await fetch(url,
     {
-      headers: {
-        "Cache-Control": building ? 'private, no-store, max-age=0, s-maxage=0, must-revalidate' : ''
-      }
+      // headers: {
+      //   "Cache-Control": building ? 'private, no-store, max-age=0, s-maxage=0, must-revalidate' : ''
+      // }
     })
     .then((res: any) => res.json())
     .then((json: any) => json.docs[0])

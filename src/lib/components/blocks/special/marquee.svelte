@@ -9,7 +9,7 @@
 	const { blockData }: { blockData: IMarquee } = $props();
 	const {
 		items = [],
-		style: { font, background, color, height, border, borderPosition, padding, gap } = {},
+		style: { font, background, color, height, border, padding, gap } = {},
 		options,
 		link
 		//  animation
@@ -18,24 +18,41 @@
 
 <section
 	id="marquee-block"
-	style:border={borderPosition ?? border}
 	style:padding
 	style:background
 	style:color
-	style={borderPosition && `border-${borderPosition}:${border};`}
 	class:mask-none={!options?.maskEdges}
 	class="mask-l-from-90% mask-r-from-90% overflow-clip"
 >
-	<a href={(link as Page)?.slug} aria-hidden={!(link as Page)?.slug}>
+	<a
+		style:height
+		style:border-top={border}
+		style:border-bottom={border}
+		style:max-height={height}
+		href={(link as Page)?.slug}
+		aria-hidden={!(link as Page)?.slug}
+		class="flex max-h-25"
+	>
+		<div
+			style:gap
+			style:animation-duration={options?.duration}
+			class:flex-wrap={prefersReducedMotion.current}
+			class="marquee-default w-max min-w-full flex justify-around items-center"
+		>
+			{#each items as { image, text }, i}
+				<Image {image} class="h-full object-contain" />
+				<div style:font class="text-nowrap">{text}</div>
+			{/each}
+		</div>
 		<div
 			style:height
 			style:gap
 			style:animation-duration={options?.duration}
 			class:flex-wrap={prefersReducedMotion.current}
-			class="marquee-default w-max flex justify-center items-center gap-x-10"
+			class="marquee-default w-max min-w-full flex justify-around items-center gap-x-10"
 		>
-			{#each [...items!, ...items!] as { image, text }, i}
-				<Image {image} class="h-full" />
+			{#each items as { image, text }, i}
+				<Image {image} class="h-full object-contain" />
 				<div style:font class="text-nowrap">{text}</div>
 			{/each}
 		</div>
@@ -44,6 +61,6 @@
 
 <style>
 	.marquee-default {
-		animation: marquee 40s linear infinite;
+		animation: marquee 50s linear infinite;
 	}
 </style>
