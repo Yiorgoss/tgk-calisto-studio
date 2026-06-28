@@ -29,18 +29,11 @@
 	viewBox={data.viewbox ?? '0 0 100 100'}
 	preserveAspectRatio="xMinYMin slice"
 >
-	{#if data.background data.clipPath}
+	{#if data.background || data.clipPath}
 		<clipPath id="wavyBox">
 			<path d={data.clipPath} />
 		</clipPath>
-		<rect
-			fill={data.background}
-			x={minX}
-			y={minY}
-			{height}
-			{width}
-			clip-path="url(#wavyBox)"
-		/>
+		<rect fill={data.background} x={minX} y={minY} {height} {width} clip-path="url(#wavyBox)" />
 	{/if}
 	<path
 		stroke={data.strokeColor ?? 'transparent'}

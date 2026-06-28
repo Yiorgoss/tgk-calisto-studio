@@ -23,7 +23,6 @@
 					<div class="text-2xl text-center py-5">{header}</div>
 					<div class:flex-row={horizontal} class="flex flex-col justify-center items-center">
 						{#each links as { link }}
-							{console.log({ link })}
 							<Button {link} class="h-6" />
 						{/each}
 					</div>
@@ -31,7 +30,14 @@
 			{/each}
 		</div>
 	</div>
-	<div class="w-full pt-10">
-		{@html blockData.iframe}
+	<div class="grid grid-cols-1 md:grid-cols-2 px-2 container">
+		{#each blockData.locations as { richText, iframe }}
+			<div class="">
+				<RichTextRender {richText} />
+			</div>
+			<div class="w-full pt-10">
+				{@html iframe}
+			</div>
+		{/each}
 	</div>
 </section>
