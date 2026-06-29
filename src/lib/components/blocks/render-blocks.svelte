@@ -1,15 +1,17 @@
 <script lang="ts">
-	const {
+	let {
 		blockData,
 		className,
 		cb,
 		hasLocaleSwitch,
+		ref = $bindable(null),
 		...restProps
 	}: {
 		blockData: any;
 		className?: string;
 		cb?: () => void;
 		hasLocaleSwitch?: boolean;
+		ref?: HTMLElement | null;
 		restProps?: Record<string, unknown>;
 	} = $props();
 
@@ -113,5 +115,5 @@
 
 {#if calculatedBlockType && calculatedBlockType.default}
 	{@const Block = calculatedBlockType.default}
-	<Block {className} {blockData} {cb} {hasLocaleSwitch} {...restProps} />
+	<Block {className} {blockData} {cb} {hasLocaleSwitch} bind:ref {...restProps} />
 {/if}

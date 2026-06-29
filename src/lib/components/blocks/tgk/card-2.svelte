@@ -1,9 +1,20 @@
 <script lang="ts">
 	import type { ITGKCard2 } from '@payload-types';
+	import Image from '@/components/common/image.svelte';
 
 	const { blockData }: { blockData: ITGKCard2 } = $props();
 </script>
 
-<section id="TGKCard2" class="">
-	<div class=""></div>
+<section id="TGKCard2" class="h-full">
+	<div
+		style:background={blockData.background}
+		style:height={blockData.height}
+		class:max-w-sm={true || !blockData.width}
+		class="bg-blue-400 flex flex-col p-6 gap-2 h-full justify-between items-center overflow-hidden rounded-3xl"
+	>
+		<div class="w-full h-auto rounded-xl aspect-3/4 overflow-hidden">
+			<Image class="" image={blockData.image} />
+		</div>
+		<div class=" text-xl">{blockData.title}</div>
+	</div>
 </section>

@@ -37,7 +37,7 @@
 	let nav = $derived(page.data.nav);
 </script>
 
-<div class="text-base scrollbar-gutter-stable">
+<div class="text-base">
 	<header class="text-foreground bg-background">
 		<RenderBlocks blockData={nav?.header?.[0]} />
 	</header>

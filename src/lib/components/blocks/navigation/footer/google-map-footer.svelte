@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { IGoogleMapFooter } from '@payload-types';
 	import Button from '@/components/common/button.svelte';
-	import Image from '@/components/common/Image.svelte';
+	import Image from '@/components/common/image.svelte';
 
 	const { blockData }: { blockData: IGoogleMapFooter } = $props();
 </script>

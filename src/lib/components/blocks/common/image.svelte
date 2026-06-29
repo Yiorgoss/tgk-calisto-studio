@@ -3,7 +3,11 @@
 	import { cn } from '@/utils';
 	import { type IImage } from '@payload-types';
 
-	const { blockData, sizes }: { blockData: IImage; sizes?: string } = $props();
+	let {
+		blockData,
+		sizes,
+		ref = $bindable(null)
+	}: { blockData: IImage; sizes?: string; ref?: HTMLElement | null } = $props();
 </script>
 
 <div id="image-block" class="h-fit w-fit max-w-full overflow-hidden">

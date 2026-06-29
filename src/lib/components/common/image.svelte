@@ -8,6 +8,7 @@
 	import { MediaQuery } from 'svelte/reactivity';
 
 	let {
+		ref = $bindable(null),
 		image,
 		class: className,
 		cb,
@@ -16,6 +17,7 @@
 		loading = 'lazy',
 		fetchpriority = 'low'
 	}: {
+		ref?: HTMLImageElement | null;
 		image: IImage['image'];
 		class?: string;
 		alt?: string;
@@ -81,6 +83,7 @@
 		<div class:hidden={loaded} class="absolute inset-0 bg-white/60 animate-pulse"></div>
 		{#if ignoreSizes}
 			<img
+				bind:this={ref}
 				style:object-fit={style?.objectFit}
 				style:object-position={style?.objectPosition}
 				onload={() => (loaded = true)}
@@ -96,6 +99,7 @@
 			/>
 		{:else}
 			<img
+				bind:this={ref}
 				style:object-fit={style?.objectFit}
 				style:object-position={style?.objectPosition}
 				onload={() => (loaded = true)}

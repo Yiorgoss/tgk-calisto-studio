@@ -21,7 +21,8 @@
 		cb?: () => void;
 	} = $props();
 
-	const { height, background, minHeight, textWrap, padding } = $derived(style || {});
+	const { height, background, minHeight, maxWidth, textWrap, padding, border, borderRadius } =
+		$derived(style || {});
 
 	onMount(() => {
 		cb && cb();
@@ -34,8 +35,11 @@
 		style:height
 		style:background
 		style:padding
+		style:border
+		style:border-radius={borderRadius}
 		style:text-wrap={textWrap}
 		style:min-height={minHeight}
+		style:max-width={maxWidth}
 		class={cn('relative overflow-hidden', overrides)}
 	>
 		{#if loading}
