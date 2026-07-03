@@ -10,6 +10,11 @@
 	}: { blockData: IImage; sizes?: string; ref?: HTMLElement | null } = $props();
 </script>
 
-<div id="image-block" class="h-fit w-fit max-w-full overflow-hidden">
+<div
+	id="image-block"
+	style:height={blockData.style?.height}
+	style:width={blockData.style?.width}
+	class="h-fit w-fit max-w-full overflow-hidden"
+>
 	<Image class="" image={blockData.image} {sizes} />
 </div>
