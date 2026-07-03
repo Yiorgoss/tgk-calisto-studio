@@ -1,9 +1,9 @@
-import type { IPill, ICursiveText } from '@payload-types';
+import type { IPill, ICursiveText, IIcon } from '@payload-types';
 import { objToCSS } from './text-state';
 import { customText } from "./text"
 import { divider } from "./divider"
 import { resolveID, richTextImg } from '@/utils';
-import { richTextBtn } from '@/utils/payload-utils';
+import { richTextIcon, richTextBtn } from '@/utils/payload-utils';
 import { site } from '@/config';
 
 
@@ -16,7 +16,51 @@ export const htmlConverters: any = ({ defaultConverters }) => ({
   ...defaultConverters,
   text: customText,
   blocks: {
-    divider
+    divider,
+    lexImg: async (args: any) => {
+      const fields = args.node.fields || {}
+      console.log({ node: args.node })
+      return `
+        <div
+          style="
+            justify-content:${fields.style.alignX};
+            align-items:${fields.style.alignY};
+            width:100%;
+          "
+          class="w-full flex "
+          >
+          <div
+            style="
+              background:black;
+              padding:${fields.style.padding};
+              width:${fields.style.width};
+              height:auto;
+            class="w-full h-auto flex"
+            >
+            <image src="${fields.image.url}"
+              width="${fields.image.width}"
+              height="${fields.image.height}" />
+          </div>
+        </div>
+        `
+    },
+    lexIcon: async (args: any) => {
+      const fields = args.node.fields || {}
+      const { name, style } = fields.icon || {}
+      console.log({ fields })
+      return `
+        <div id="richtextIcon"
+            style="
+              height:${fields.style?.height};
+              width:${fields.style?.width};
+              padding:${fields.style?.padding};
+              justify-content:${style?.alignX};
+              align-items:${style?.alignY}; "
+            class=''
+          >
+          ${richTextIcon({ name, style })}
+        </div>`
+    }
   },
   inlineBlocks: {
     // Each key should match your inline block's slug
@@ -26,7 +70,7 @@ export const htmlConverters: any = ({ defaultConverters }) => ({
       const { name, style } = fields.icon || {}
 
       return `<div id="replace-marker-id-${fields?.id}" class="replace-marker" style="height:${style.width}px;width:${style.width}px;display:inline;">
-        <iconify-icon width="${style.width}" height="${style.height}" style="${style.string}" icon="${name}"></iconify-icon>
+        ${richTextIcon({ name, style })}
       </div>`
     },
     svgText: async (args: any) => {

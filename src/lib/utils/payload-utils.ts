@@ -1,4 +1,4 @@
-import type { Asset, Page, Tenant, IButton } from '@payload-types';
+import type { Asset, Page, Tenant, IButton, IIcon } from '@payload-types';
 import { defaultLocale, site, type SiteConfigType } from '@/config';
 import { error } from '@sveltejs/kit';
 import { buttonVariants } from '@/components/ui/button';
@@ -82,6 +82,24 @@ export async function resolveID({
   }
   return Promise.resolve(data);
 }
+
+
+
+export const richTextIcon = ({ name, style }: IIcon) =>
+  `<iconify-icon
+    width="${style?.width}"
+    height="${style?.height}"
+    style="
+          width:100%;
+          height:100%;
+          background:${style?.background};
+          color:${style?.color};
+          border:${style?.border};
+          border-radius:${style?.borderRadius};
+          overflow:${style?.overflow};
+          ${style?.string}"
+    icon="${name}">
+  </iconify-icon>`
 
 // export const richTextImg = ({ image }: { image: Asset }) => {
 export const richTextImg = (src: string) => {
