@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IMidFloadHeader, INestedLink } from '@payload-types';
+	import type { IMidFloadHeader, INestedLink, Page } from '@payload-types';
 	import * as Nav from '@/components/ui/navigation-menu';
 	import Image from '@/components/common/image.svelte';
 	import Button from '@/components/common/button.svelte';
@@ -9,16 +9,32 @@
 	import LocaleSwitcher from '@/components/common/locale-switcher.svelte';
 	import { supportedLocales } from '@/config';
 	import Icon from '@/components/common/icon.svelte';
-	import { MediaQuery } from 'svelte/reactivity';
 
 	const { blockData }: { blockData: IMidFloadHeader } = $props();
 
 	const { image, left, right } = $derived(blockData);
-
-	const { locale, slug } = page.params;
+	const { locale, slug } = $derived(page.params);
 
 	let open = $state(false);
-	// let mobile = new MediaQuery('max-width: 768px');
+
+	let activeLink = $derived.by(() => {
+		/*
+	this little cancerous funciton simply combines all the available links,
+	iterates them until we find the active link then returns it to be used to set styles later on
+	  */
+		let activeNest;
+		[...(left ?? []), ...(right ?? [])].forEach(({ nLink }) => {
+			if (!nLink) return;
+			if (!nLink.arr) return;
+			nLink.arr.forEach(({ link }) => {
+				/* @ts-ignore -- reference.value will always have a slug because of default populate */
+				if (link?.reference?.value.slug == slug?.split(',')[0]) {
+					activeNest = nLink;
+				}
+			});
+		});
+		return activeNest;
+	});
 </script>
 
 <section id="MidFloadHeader" class="">
@@ -30,7 +46,7 @@
 			<!-- desktop -->
 			<Nav.Root viewport={false} class="w-full min-w-full" orientation="horizontal">
 				<Nav.List
-					style="background:${blockData.style?.background}"
+					style={`background:${blockData.style?.background};`}
 					class="px-0 lg:px-10 mx-auto bg-background shadow-xl max-w-full rounded-2xl w-full items-center justify-center h-full hidden md:flex"
 				>
 					<div class="grow shrink basis-0 flex items-center justify-around">
@@ -110,25 +126,32 @@
 
 {#snippet nestedLink({ nLink }: { nLink: INestedLink | undefined | null })}
 	{#if nLink}
-		{@const activePage = nLink.arr[0]?.slug?.split('/')[0] == slug?.split('/')[0]}
 		<Nav.Item class="py-2 px-0 w-fit">
 			{#if nLink?.arr?.length == 1}
 				<Nav.Link class="">
 					{#snippet child()}
 						<Button
-							class={cn('whitespace-nowrap m-0 w-full p-2 h-auto ', true && 'text-(--chart-4)')}
-							link={nLink.arr[0].link}
+							class={cn(
+								'whitespace-nowrap m-0 w-full p-2 h-auto ',
+								activeLink == nLink && 'text-primary'
+							)}
+							link={nLink?.arr[0].link}
 						/>
 					{/snippet}
 				</Nav.Link>
 			{:else}
-				<Nav.Trigger class="w-fit p-2 h-auto whitespace-normal">{nLink.name}</Nav.Trigger>
-				<Nav.Content class="">
+				<!--  Trigger must com after because we need to use peer  -->
+				<Nav.Trigger class="w-fit p-2 h-auto whitespace-normal">
+					<span class:text-primary={activeLink == nLink}>
+						{nLink.name}
+					</span>
+				</Nav.Trigger>
+				<Nav.Content>
 					<ul class=" flex flex-col gap-1 md:w-30 lg:w-40">
 						{#each nLink.arr ?? [] as { link }}
 							<Nav.Link>
 								{#snippet child()}
-									<Button class={cn('py-2 h-auto', activePage && 'text-(--white)')} {link} />
+									<Button class="py-2 h-auto" {link} />
 								{/snippet}
 							</Nav.Link>
 						{/each}

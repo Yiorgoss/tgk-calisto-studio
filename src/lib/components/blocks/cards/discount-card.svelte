@@ -39,7 +39,7 @@
 					<div class="bg-primary justify-between h-full flex flex-col rounded-3xl p-10">
 						<RichTextRender {richText} />
 						<div class="flex flex-col gap-8 px-4">
-							<div class="text-background flex flex-col text-balance font-thin">
+							<div class="text-background flex flex-col font-thin">
 								{#if includeDiscount && checked}
 									<span class="text-4xl pt-5 font-semibold">
 										{@html site.currency}

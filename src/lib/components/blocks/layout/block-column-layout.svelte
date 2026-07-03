@@ -92,6 +92,7 @@
 		<div
 			style:align-items={style?.alignY}
 			style:justify-content={style?.alignX}
+			style:height={blockData?.itemHeight?.split(',')[0]}
 			style:display="flex"
 			class={cn(
 				'animate-child w-full flex grow justify-center items-center md:items-stretch',
@@ -107,6 +108,7 @@
 			<div
 				style:align-items={style?.alignY}
 				style:justify-content={style?.alignX}
+				style:height={blockData?.itemHeight?.split(',')[1]}
 				style:display="flex"
 				class={cn(
 					'animate-child w-full flex grow justify-center items-center md:items-stretch',
@@ -120,6 +122,7 @@
 			<div
 				style:align-items={style?.alignY}
 				style:justify-content={style?.alignX}
+				style:height={blockData?.itemHeight?.split(',')[2]}
 				style:display="flex"
 				class={cn(
 					'animate-child w-full flex grow justify-center items-center md:items-stretch',

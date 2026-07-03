@@ -17,6 +17,9 @@
 	let html = $state('');
 
 	$effect(() => {
+		if (!richText.text) {
+			console.log({ richTextFaailue: richText });
+		}
 		convertLexicalToHTMLAsync({
 			data: richText.text,
 			converters: htmlConverters,

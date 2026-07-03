@@ -5,9 +5,9 @@
 
 	const { data }: { data: IWavyText } = $props();
 
-	const [minX, minY, width, height] = data.viewbox?.split(' ').filter(Boolean);
+	const [minX, minY, width, height] = data.svg.viewbox?.split(' ').filter(Boolean);
 
-	let elem: HTMLElement;
+	let elem: SVGSVGElement;
 	onMount(() =>
 		scroll(
 			animate(elem.querySelectorAll('text > textPath'), {
@@ -27,28 +27,35 @@
 <svg
 	bind:this={elem}
 	class="h-full w-full"
-	viewBox={data.viewbox ?? '0 0 100 100'}
+	viewBox={data.svg?.viewbox ?? '0 0 100 100'}
 	preserveAspectRatio="xMinYMin slice"
 >
-	{#if data.background || data.clipPath}
+	{#if data.svg?.background || data.svg?.clipPath}
 		<clipPath id="wavyBox">
-			<path d={data.clipPath} />
+			<path d={data.svg?.clipPath} />
 		</clipPath>
-		<rect fill={data.background} x={minX} y={minY} {height} {width} clip-path="url(#wavyBox)" />
+		<rect
+			fill={data.svg?.background}
+			x={minX}
+			y={minY}
+			{height}
+			{width}
+			clip-path="url(#wavyBox)"
+		/>
 	{/if}
 	<path
-		stroke={data.strokeColor ?? 'transparent'}
-		stroke-width={data.strokeWidth}
+		stroke={data.svg?.strokeColor ?? 'transparent'}
+		stroke-width={data.svg?.strokeWidth}
 		stroke-linecap="round"
 		id="wavy-text-path"
-		d={data.path}
+		d={data.svg?.path}
 		fill="none"
 	/>
-	<text font-size={data.fontSize} word-spacing={data.wordSpacing}>
+	<text font-size={data.svg?.fontSize} word-spacing={data.svg?.wordSpacing}>
 		<textPath
 			href="#wavy-text-path"
 			alignment-baseline="middle"
-			fill={data.color}
+			fill={data.svg?.color}
 			startOffset="0"
 			text-anchor="middle"
 		>

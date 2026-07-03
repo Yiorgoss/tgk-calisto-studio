@@ -6,45 +6,35 @@
 
 	const { blockData: data }: { blockData: IClipGutter } = $props();
 
-	const [minX, minY, width, height] = data.viewbox?.split(' ').filter(Boolean) || [];
+	const [minX, minY, width, height] = data.svg.viewbox?.split(' ').filter(Boolean) || [];
 </script>
 
-<svg
-	class="h-full w-full"
-	viewBox={data.viewbox ?? '0 0 100 100'}
-	preserveAspectRatio="xMinYMin slice"
+<div
+	style:background={data?.style?.background ?? ''}
+	class="h-full w-full grid grid-cols-1 grid-rows-1"
 >
-	{#if data.background || data.clipPath}
-		<clipPath id="clip-gutter-path">
-			<path d={data.clipPath} />
-		</clipPath>
-		<rect
-			fill={data.background}
-			x={minX}
-			y={minY}
-			{height}
-			{width}
-			clip-path="url(#clip-gutter-path)"
-		/>
+	{#if data.bgImage}
+		<div class="row-start-1 col-start-1">
+			<Image image={data.bgImage} />
+		</div>
 	{/if}
-</svg>
-
-<!--  <div class="">
-	<SVGRender
-		name="clip-path"
-		data={{
-			path: blockData.path,
-			scale: blockData.scale
-		}}
-	/>
-	<div
-		style="clip-path:url(#wave-1);"
-		style:background-color={blockData.bgColor}
-		class:-scale-100={blockData.keepBelow}
-		class="w-full h-100 overflow-hidden"
+	<svg
+		class="row-start-1 col-start-1"
+		viewBox={data.svg.viewbox ?? '0 0 100 100'}
+		preserveAspectRatio="xMinYMin slice"
 	>
-		{#if blockData.bgImage}
-			<Image image={blockData.bgImage} />
+		{#if data.svg.background || data.svg.clipPath}
+			<clipPath id="clip-gutter-path">
+				<path d={data.svg.clipPath} />
+			</clipPath>
+			<rect
+				fill={data.svg.background}
+				x={minX}
+				y={minY}
+				{height}
+				{width}
+				clip-path="url(#clip-gutter-path)"
+			/>
 		{/if}
-	</div>
-</div>  -->
+	</svg>
+</div>

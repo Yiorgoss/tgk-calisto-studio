@@ -100,6 +100,10 @@
 				return import('./tgk/card-2.svelte');
 			case 'tgkDoilyCard':
 				return import('./tgk/card-doily.svelte');
+			case 'tgkGridIcons':
+				return import('./tgk/tgk-grid-icons.svelte');
+			case 'tgkAccordion':
+				return import('./tgk/tgk-accordion.svelte');
 		}
 	};
 

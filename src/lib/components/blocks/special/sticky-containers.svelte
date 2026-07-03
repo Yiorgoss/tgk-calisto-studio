@@ -21,7 +21,7 @@
 			<div
 				style:top={`${50 * i + 5}px`}
 				style:border={blockData.style?.border}
-				style:background={style?.background?.split(',')[i % 2]}
+				style:background={style?.multiBg?.bgs?.split(',')[i % style?.multiBg?.k]}
 				style:border-radius={style?.borderRadius}
 				class={cn(
 					` text-background bg-foreground rounded-3xl sticky`,
