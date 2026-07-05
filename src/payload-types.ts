@@ -70,6 +70,7 @@ export interface Config {
     rtBlock: IRichText;
     image: IImage;
     gutter: IGutter;
+    gutterv2: IGutterV2;
     clipGutter: IClipGutter;
     button: IButtonBlock;
     blockColumnLayout: IBlockColumnLayout;
@@ -98,14 +99,24 @@ export interface Config {
     midFloatHeader: IMidFloadHeader;
     richTextFooter: IRichTextFooter;
     footerDesign2: IFooterDesign2;
+    googleMapFooter: IGoogleMapFooter;
     pill: IPillRTBlock;
     buttonRT: IImageRTBlock;
     svgText: ISVGText;
     listMarkerIcon: ILexicalMarkerIcon;
+    divider: IDivider;
+    lexIcon: IRTIcon;
+    lexImg: ILexicalImage;
     contactForm: IContactFormBlock;
     emboldenEpubConverter: EmboldenEpubConverterI;
     googlemaps: IGoogleMaps;
     textImageSplit: ITextImageSplit;
+    tgkLandingHome: ITGKLandingHome;
+    tgkCard1: ITGKCard1;
+    tgkCard2: ITGKCard2;
+    tgkDoilyCard: ITGKDoilyCard;
+    tgkAccordion: ITGKAccordion;
+    tgkGridIcons: ITGKGridIcons;
   };
   collections: {
     users: User;
@@ -218,6 +229,7 @@ export interface IRichTextField {
     marker?: string | null;
     textWrap?: string | null;
     border?: string | null;
+    borderRadius?: string | null;
   };
   mobileStyle?: {
     textAlign?: string | null;
@@ -376,6 +388,7 @@ export interface Page {
         | IHeroCutout
         | IBlockColumnLayout
         | ITextImageSplit
+        | ITGKLandingHome
       )[]
     | null;
   layout?:
@@ -385,6 +398,7 @@ export interface Page {
         | IRichText
         | IImage
         | IGutter
+        | IGutterV2
         | IClipGutter
         | IStickyContainers
         | BentoGrid
@@ -409,6 +423,12 @@ export interface Page {
         | IMarquee
         | EmboldenEpubConverterI
         | ITextImageSplit
+        | ITGKLandingHome
+        | ITGKCard1
+        | ITGKCard2
+        | ITGKDoilyCard
+        | ITGKAccordion
+        | ITGKGridIcons
       )[]
     | null;
   meta?: ISEO;
@@ -441,7 +461,7 @@ export interface Tenant {
  */
 export interface INavigation {
   header?: (IImageHeader | IFloatingHeader | IMidFloadHeader)[] | null;
-  footer?: (IRichTextFooter | IFooterDesign2)[] | null;
+  footer?: (IRichTextFooter | IFooterDesign2 | IGoogleMapFooter)[] | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -501,6 +521,7 @@ export interface IMidFloadHeader {
     | null;
   style?: {
     inset?: string | null;
+    background?: string | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -573,6 +594,11 @@ export interface IFooterDesign2 {
         | IWavyText
         | EmboldenEpubConverterI
         | ITextImageSplit
+        | ITGKCard1
+        | ITGKCard2
+        | ITGKDoilyCard
+        | ITGKAccordion
+        | ITGKGridIcons
         | IFlexboxLayout
       )[]
     | null;
@@ -595,6 +621,11 @@ export interface IFooterDesign2 {
         | IWavyText
         | EmboldenEpubConverterI
         | ITextImageSplit
+        | ITGKCard1
+        | ITGKCard2
+        | ITGKDoilyCard
+        | ITGKAccordion
+        | ITGKGridIcons
         | IFlexboxLayout
       )[]
     | null;
@@ -617,6 +648,11 @@ export interface IFooterDesign2 {
         | IWavyText
         | EmboldenEpubConverterI
         | ITextImageSplit
+        | ITGKCard1
+        | ITGKCard2
+        | ITGKDoilyCard
+        | ITGKAccordion
+        | ITGKGridIcons
         | IFlexboxLayout
       )[]
     | null;
@@ -652,14 +688,15 @@ export interface ITextUnderCard {
  * via the `definition` "ISingleCard".
  */
 export interface ISingleCard {
-  richText?: IRichTextField;
   image?: IImageField;
+  richText?: IRichTextField;
   link?: (number | null) | Page;
   style?: {
     background?: string | null;
     width?: string | null;
     maxWidth?: string | null;
     border?: string | null;
+    borderRadius?: string | null;
     alignX?: ('start' | 'center' | 'end' | 'space-around' | 'space-evenly') | null;
     alignY?: ('start' | 'center' | 'end' | 'stretch') | null;
     hasShadow?: boolean | null;
@@ -694,9 +731,15 @@ export interface IAccordion {
  */
 export interface IIcon {
   name?: string | null;
+  size?: string | null;
   style?: {
+    background?: string | null;
+    color?: string | null;
     width?: string | null;
     height?: string | null;
+    border?: string | null;
+    borderRadius?: string | null;
+    overflow?: string | null;
     string?: string | null;
   };
 }
@@ -784,6 +827,10 @@ export interface IRichText {
  */
 export interface IImage {
   image?: IImageField;
+  style?: {
+    height?: string | null;
+    width?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'image';
@@ -802,7 +849,17 @@ export interface IStickyContainers {
       }[]
     | null;
   style?: {
-    background?: string | null;
+    padding?: string | null;
+    gap?: string | null;
+    multiBg?: {
+      /**
+       * comma seperated eg #fff, #d2d2d2
+       */
+      bgs?: string | null;
+      k?: number | null;
+    };
+    border?: string | null;
+    borderRadius?: string | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -1016,12 +1073,26 @@ export interface Form {
  * via the `definition` "ICarousel".
  */
 export interface ICarousel {
-  items?: (IHoverCard | ITextUnderCard | IRichTextCard | ISingleCard | IRichText | IImage | IFlexItem)[] | null;
+  items?:
+    | (
+        | IHoverCard
+        | ITextUnderCard
+        | IRichTextCard
+        | ISingleCard
+        | IRichText
+        | IImage
+        | IFlexItem
+        | ITGKCard1
+        | ITGKCard2
+        | ITGKDoilyCard
+      )[]
+    | null;
   options?: {
     loop?: boolean | null;
   };
   style?: {
     background?: string | null;
+    gap?: string | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -1053,23 +1124,78 @@ export interface IFlexItem {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ITGKCard1".
+ */
+export interface ITGKCard1 {
+  title?: string | null;
+  left?: boolean | null;
+  style?: {
+    background?: string | null;
+    color?: string | null;
+    height?: string | null;
+    width?: string | null;
+  };
+  mobileStyles?: {
+    height?: string | null;
+    width?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tgkCard1';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ITGKCard2".
+ */
+export interface ITGKCard2 {
+  image?: IImageField;
+  title?: string | null;
+  style?: {
+    background?: string | null;
+    height?: string | null;
+    border?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tgkCard2';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ITGKDoilyCard".
+ */
+export interface ITGKDoilyCard {
+  bg?: IImageField;
+  img?: IImageField;
+  style?: {
+    padding?: string | null;
+    height?: string | null;
+    width?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tgkDoilyCard';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "IWavyText".
  */
 export interface IWavyText {
   text?: string | null;
-  clip?: ('below' | 'above') | null;
   svg?: {
+    clipPath?: string | null;
     path?: string | null;
     viewbox?: string | null;
     strokeColor?: string | null;
     strokeWidth?: string | null;
     color?: string | null;
+    background?: string | null;
     fontSize?: string | null;
     wordSpacing?: string | null;
   };
   style?: {
     height?: string | null;
     width?: string | null;
+    background?: string | null;
   };
   bgImage?: IImageField;
   id?: string | null;
@@ -1102,6 +1228,67 @@ export interface ITextImageSplit {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ITGKAccordion".
+ */
+export interface ITGKAccordion {
+  icon?: IIcon;
+  list?:
+    | {
+        title?: string | null;
+        richText?: IRichTextField;
+        id?: string | null;
+      }[]
+    | null;
+  style?: {
+    background?: string | null;
+    padding?: string | null;
+    gap?: string | null;
+    container?: boolean | null;
+    width?: string | null;
+  };
+  btnStyle?: {
+    padding?: string | null;
+    background?: string | null;
+    border?: string | null;
+    borderRadius?: string | null;
+  };
+  dropStyle?: {
+    padding?: string | null;
+    background?: string | null;
+    border?: string | null;
+    borderRadius?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tgkAccordion';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ITGKGridIcons".
+ */
+export interface ITGKGridIcons {
+  arr?:
+    | {
+        icon?: IIcon;
+        richText?: IRichTextField;
+        id?: string | null;
+      }[]
+    | null;
+  style?: {
+    background?: string | null;
+    padding?: string | null;
+    alignX?: ('start' | 'center' | 'end' | 'space-around' | 'space-evenly') | null;
+    alignY?: ('start' | 'center' | 'end' | 'stretch') | null;
+    gap?: string | null;
+    width?: string | null;
+    container?: boolean | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tgkGridIcons';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "IFlexboxLayout".
  */
 export interface IFlexboxLayout {
@@ -1126,6 +1313,11 @@ export interface IFlexboxLayout {
               | IWavyText
               | EmboldenEpubConverterI
               | ITextImageSplit
+              | ITGKCard1
+              | ITGKCard2
+              | ITGKDoilyCard
+              | ITGKAccordion
+              | ITGKGridIcons
             )[]
           | null;
         id?: string | null;
@@ -1142,6 +1334,39 @@ export interface IFlexboxLayout {
   id?: string | null;
   blockName?: string | null;
   blockType: 'flexboxLayout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IGoogleMapFooter".
+ */
+export interface IGoogleMapFooter {
+  logo?: IImageField;
+  list?:
+    | {
+        header?: string | null;
+        horizontal?: boolean | null;
+        links?:
+          | {
+              link?: IButton;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  locations?:
+    | {
+        richText?: IRichTextField;
+        iframe?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  style?: {
+    background?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'googleMapFooter';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1221,6 +1446,7 @@ export interface IHeroCutout {
  */
 export interface IBlockColumnLayout {
   layout?: ('oneColumn' | 'twoOneThird' | 'oneTwoThird' | 'halfAndHalf' | 'threeColumns') | null;
+  itemHeight?: string | null;
   columnOne?:
     | (
         | ITextUnderCard
@@ -1240,6 +1466,11 @@ export interface IBlockColumnLayout {
         | IWavyText
         | EmboldenEpubConverterI
         | ITextImageSplit
+        | ITGKCard1
+        | ITGKCard2
+        | ITGKDoilyCard
+        | ITGKAccordion
+        | ITGKGridIcons
         | IFlexboxLayout
       )[]
     | null;
@@ -1262,6 +1493,11 @@ export interface IBlockColumnLayout {
         | IWavyText
         | EmboldenEpubConverterI
         | ITextImageSplit
+        | ITGKCard1
+        | ITGKCard2
+        | ITGKDoilyCard
+        | ITGKAccordion
+        | ITGKGridIcons
         | IFlexboxLayout
       )[]
     | null;
@@ -1284,6 +1520,11 @@ export interface IBlockColumnLayout {
         | IWavyText
         | EmboldenEpubConverterI
         | ITextImageSplit
+        | ITGKCard1
+        | ITGKCard2
+        | ITGKDoilyCard
+        | ITGKAccordion
+        | ITGKGridIcons
         | IFlexboxLayout
       )[]
     | null;
@@ -1349,6 +1590,19 @@ export interface IAnimation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ITGKLandingHome".
+ */
+export interface ITGKLandingHome {
+  imgLeft?: IImageField;
+  imgRight?: IImageField;
+  richText?: IRichTextField;
+  flip?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tgkLandingHome';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "IGutter".
  */
 export interface IGutter {
@@ -1365,13 +1619,33 @@ export interface IGutter {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IGutterV2".
+ */
+export interface IGutterV2 {
+  style?: {
+    height?: string | null;
+    background?: string | null;
+    color?: string | null;
+    container?: boolean | null;
+  };
+  image?: IImageField;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gutterv2';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "IClipGutter".
  */
 export interface IClipGutter {
-  path?: string | null;
-  scale?: string | null;
-  keepBelow?: boolean | null;
-  bgColor?: string | null;
+  svg?: {
+    clipPath?: string | null;
+    viewbox?: string | null;
+    background?: string | null;
+  };
+  style?: {
+    background?: string | null;
+  };
   bgImage?: IImageField;
   id?: string | null;
   blockName?: string | null;
@@ -1442,7 +1716,6 @@ export interface IMarquee {
     height?: string | null;
     padding?: string | null;
     border?: string | null;
-    borderPosition?: ('top' | 'right' | 'bottom' | 'left') | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -1514,10 +1787,58 @@ export interface ISVGText {
  */
 export interface ILexicalMarkerIcon {
   icon?: IIcon;
-  iconifyStyles?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'listMarkerIcon';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IDivider".
+ */
+export interface IDivider {
+  style?: {
+    height?: string | null;
+    width?: string | null;
+    border?: string | null;
+    alignX?: ('start' | 'center' | 'end' | 'space-around' | 'space-evenly') | null;
+    padding?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'divider';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IRTIcon".
+ */
+export interface IRTIcon {
+  icon?: IIcon;
+  style?: {
+    padding?: string | null;
+    alignX?: ('start' | 'center' | 'end' | 'space-around' | 'space-evenly') | null;
+    alignY?: ('start' | 'center' | 'end' | 'stretch') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'lexIcon';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ILexicalImage".
+ */
+export interface ILexicalImage {
+  image?: (number | null) | Asset;
+  alt?: string | null;
+  style?: {
+    padding?: string | null;
+    width?: string | null;
+    height?: string | null;
+    alignX?: ('start' | 'center' | 'end' | 'space-around' | 'space-evenly') | null;
+    alignY?: ('start' | 'center' | 'end' | 'stretch') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'lexImg';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
