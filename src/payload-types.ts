@@ -73,6 +73,7 @@ export interface Config {
     gutterv2: IGutterV2;
     clipGutter: IClipGutter;
     button: IButtonBlock;
+    videoLanding: IVideoLanding;
     blockColumnLayout: IBlockColumnLayout;
     flexboxLayout: IFlexboxLayout;
     calistoFeatureCard: ICalistoFeatureCard;
@@ -117,6 +118,7 @@ export interface Config {
     tgkDoilyCard: ITGKDoilyCard;
     tgkAccordion: ITGKAccordion;
     tgkGridIcons: ITGKGridIcons;
+    tgkCardIcons: ITGKCardIcon;
   };
   collections: {
     users: User;
@@ -389,6 +391,7 @@ export interface Page {
         | IBlockColumnLayout
         | ITextImageSplit
         | ITGKLandingHome
+        | IVideoLanding
       )[]
     | null;
   layout?:
@@ -427,6 +430,7 @@ export interface Page {
         | ITGKCard1
         | ITGKCard2
         | ITGKDoilyCard
+        | ITGKCardIcon
         | ITGKAccordion
         | ITGKGridIcons
       )[]
@@ -586,6 +590,7 @@ export interface IFooterDesign2 {
         | IButtonBlock
         | IRichText
         | IImage
+        | IVideoLanding
         | IStickyContainers
         | BentoGrid
         | IContactFormBlock
@@ -599,6 +604,7 @@ export interface IFooterDesign2 {
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
+        | ITGKCardIcon
         | IFlexboxLayout
       )[]
     | null;
@@ -613,6 +619,7 @@ export interface IFooterDesign2 {
         | IButtonBlock
         | IRichText
         | IImage
+        | IVideoLanding
         | IStickyContainers
         | BentoGrid
         | IContactFormBlock
@@ -626,6 +633,7 @@ export interface IFooterDesign2 {
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
+        | ITGKCardIcon
         | IFlexboxLayout
       )[]
     | null;
@@ -640,6 +648,7 @@ export interface IFooterDesign2 {
         | IButtonBlock
         | IRichText
         | IImage
+        | IVideoLanding
         | IStickyContainers
         | BentoGrid
         | IContactFormBlock
@@ -653,6 +662,7 @@ export interface IFooterDesign2 {
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
+        | ITGKCardIcon
         | IFlexboxLayout
       )[]
     | null;
@@ -734,6 +744,7 @@ export interface IIcon {
   size?: string | null;
   style?: {
     background?: string | null;
+    margin?: string | null;
     color?: string | null;
     width?: string | null;
     height?: string | null;
@@ -834,6 +845,20 @@ export interface IImage {
   id?: string | null;
   blockName?: string | null;
   blockType: 'image';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IVideoLanding".
+ */
+export interface IVideoLanding {
+  video?: (number | null) | Asset;
+  richText?: IRichTextField;
+  style?: {
+    background?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoLanding';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1084,6 +1109,7 @@ export interface ICarousel {
         | IFlexItem
         | ITGKCard1
         | ITGKCard2
+        | ITGKCardIcon
         | ITGKDoilyCard
       )[]
     | null;
@@ -1158,6 +1184,29 @@ export interface ITGKCard2 {
   id?: string | null;
   blockName?: string | null;
   blockType: 'tgkCard2';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ITGKCardIcon".
+ */
+export interface ITGKCardIcon {
+  arr?:
+    | {
+        icon?: IIcon;
+        richText?: IRichTextField;
+        id?: string | null;
+      }[]
+    | null;
+  style?: {
+    background?: string | null;
+    border?: string | null;
+    borderRadius?: string | null;
+    width?: string | null;
+    height?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tgkCardIcons';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1305,6 +1354,7 @@ export interface IFlexboxLayout {
               | IButtonBlock
               | IRichText
               | IImage
+              | IVideoLanding
               | IStickyContainers
               | BentoGrid
               | IContactFormBlock
@@ -1318,6 +1368,7 @@ export interface IFlexboxLayout {
               | ITGKDoilyCard
               | ITGKAccordion
               | ITGKGridIcons
+              | ITGKCardIcon
             )[]
           | null;
         id?: string | null;
@@ -1458,6 +1509,7 @@ export interface IBlockColumnLayout {
         | IButtonBlock
         | IRichText
         | IImage
+        | IVideoLanding
         | IStickyContainers
         | BentoGrid
         | IContactFormBlock
@@ -1471,6 +1523,7 @@ export interface IBlockColumnLayout {
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
+        | ITGKCardIcon
         | IFlexboxLayout
       )[]
     | null;
@@ -1485,6 +1538,7 @@ export interface IBlockColumnLayout {
         | IButtonBlock
         | IRichText
         | IImage
+        | IVideoLanding
         | IStickyContainers
         | BentoGrid
         | IContactFormBlock
@@ -1498,6 +1552,7 @@ export interface IBlockColumnLayout {
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
+        | ITGKCardIcon
         | IFlexboxLayout
       )[]
     | null;
@@ -1512,6 +1567,7 @@ export interface IBlockColumnLayout {
         | IButtonBlock
         | IRichText
         | IImage
+        | IVideoLanding
         | IStickyContainers
         | BentoGrid
         | IContactFormBlock
@@ -1525,6 +1581,7 @@ export interface IBlockColumnLayout {
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
+        | ITGKCardIcon
         | IFlexboxLayout
       )[]
     | null;
