@@ -61,11 +61,15 @@
 					</div>
 					<!--  careful with the magic flex basis number!!  -->
 					<Nav.Item class="grow-0 w-full shrink basis-60 lg:basis-80">
-						<Nav.Link href={`/${locale ?? ''}`} aria-label="home page" class="">
-							<div class="h-(--header-height) lg:p-2 md:p-0 w-auto">
+						<Nav.Link
+							href={`/${locale ?? ''}`}
+							aria-label="home page"
+							class="hover:bg-transparent "
+						>
+							<div class="h-(--header-height) hover:bg-transparent lg:p-2 md:p-0 w-auto">
 								<Image
 									alt="link to homepage"
-									class="p-2 object-contain w-full h-auto"
+									class="p-2 object-contain hover:bg-transparent w-full h-auto"
 									{image}
 									sizes="500px"
 									fetchpriority="high"
@@ -101,7 +105,7 @@
 									aria-label="navigation menu "
 									class="focus-visible:ring-offset-background size-8 justify-center items-center flex mr-4 p-2 focus-visible:outline-hidden"
 								>
-									<Icon name="lucide:menu" />
+									<Icon name="lucide:menu" size="24px" />
 								</div>
 							</Sheet.Trigger>
 						</div>
@@ -137,8 +141,8 @@
 						<Button
 							onclick={() => (open = false)}
 							class={cn(
-								'whitespace-nowrap m-0 w-full p-2 h-auto ',
-								activeLink == nLink && 'text-primary'
+								'whitespace-nowrap font-semibold m-0 w-full p-2 h-auto hover:bg-transparent dark:hover:bg-transparent hover:text-primary/50',
+								activeLink == nLink && 'text-primary underline underline-offset-6 '
 							)}
 							link={nLink?.arr[0].link}
 						/>
@@ -146,8 +150,13 @@
 				</Nav.Link>
 			{:else}
 				<!--  Trigger must com after because we need to use peer  -->
-				<Nav.Trigger class="w-fit p-2 h-auto whitespace-normal">
-					<span class:text-primary={activeLink == nLink}>
+				<Nav.Trigger class="w-fit p-2 h-auto hover:bg-accent whitespace-normal">
+					<span
+						class:underline={activeLink == nLink}
+						class:underline-offset-6={activeLink == nLink}
+						class:text-primary={activeLink == nLink}
+						class="font-semibold"
+					>
 						{nLink.name}
 					</span>
 				</Nav.Trigger>
