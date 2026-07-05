@@ -32,7 +32,7 @@ export const load: PageServerLoad = async (args) => {
 
 export const entries: EntryGenerator = async () => {
 
-  const url = `${site.CMS}/api/tenants?where[domain][equals]=${site.domainName}`
+  const url = `${site.CMS}/api/tenants?where[domain][equals]=${site.domainName}&joins[pages][limit]=0`
   console.log({ url })
   return await fetch(url)
     .then(data => data.json())

@@ -1,9 +1,7 @@
-import type { IPill, ICursiveText, IIcon } from '@payload-types';
 import { objToCSS } from './text-state';
 import { customText } from "./text"
 import { divider } from "./divider"
-import { resolveID, richTextImg } from '@/utils';
-import { richTextIcon, richTextBtn } from '@/utils/payload-utils';
+import { richTextImg, richTextIcon, richTextBtn } from '@/utils';
 import { site } from '@/config';
 
 
