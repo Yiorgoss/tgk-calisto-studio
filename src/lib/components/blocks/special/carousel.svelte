@@ -13,7 +13,7 @@
 	});
 </script>
 
-<section style:background={blockData.style?.background} id="carouselBlock" class="pb-16">
+<section style:background={blockData.style?.background} id="carouselBlock" class="max-md:pb-25">
 	<div class=" mx-auto relative container px-2 md:px-20">
 		<Carousel.Root
 			opts={{
@@ -34,11 +34,11 @@
 			</Carousel.Content>
 			<Carousel.Previous
 				variant="ghost"
-				class="text-secondary border-2 border-secondary  max-md:size-12 max-md:mt-2 max-md:top-full max-md:left-auto max-md:right-1/2 max-md:-translate-x-5 max-md:translate-y-0"
+				class="text-secondary border-2 border-secondary max-md:size-12 max-md:mt-2 max-md:top-full max-md:left-auto max-md:right-1/2 max-md:-translate-x-5 max-md:translate-y-10"
 			/>
 			<Carousel.Next
 				variant="ghost"
-				class=" text-secondary border-2 border-secondary max-md:size-12 max-md:mt-2 max-md:top-full max-md:left-1/2 max-md:translate-x-5 max-md:translate-y-0"
+				class=" text-secondary border-2 border-secondary max-md:size-12 max-md:mt-2 max-md:top-full max-md:left-1/2 max-md:translate-x-5 max-md:translate-y-10"
 			/>
 		</Carousel.Root>
 	</div>
