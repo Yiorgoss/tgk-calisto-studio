@@ -6,7 +6,6 @@
 	const { blockData }: { blockData: ITGKCard1 } = $props();
 
 	const mobile = new MediaQuery('max-width: 768px');
-	$inspect(blockData);
 </script>
 
 <section id="TGKCard1" class="w-fit">

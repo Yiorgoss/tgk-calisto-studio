@@ -9,18 +9,35 @@
 	import LocaleSwitcher from '@/components/common/locale-switcher.svelte';
 	import { supportedLocales } from '@/config';
 	import Icon from '@/components/common/icon.svelte';
+	import { scroll } from 'motion';
+	import { untrack } from 'svelte';
 
 	const { blockData }: { blockData: IMidFloadHeader } = $props();
 
 	const { image, left, right } = $derived(blockData);
 	const { locale, slug } = $derived(page.params);
 
+	let scrollY = $state(0);
+	let previous = $state(0);
+	let hidden = $state(false);
+
+	$effect(() => {
+		const prev = untrack(() => previous);
+
+		if (prev - scrollY <= 0 && scrollY > 100) {
+			hidden = true;
+		} else {
+			hidden = false;
+		}
+		previous = scrollY;
+	});
+
 	let open = $state(false);
 
 	let activeLink = $derived.by(() => {
 		/*
-	this little cancerous funciton simply combines all the available links,
-	iterates them until we find the active link then returns it to be used to set styles later on
+			this little cancerous funciton simply combines all the available links,
+			iterates them until we find the active link then returns it to be used to set styles later on
 	  */
 		let activeNest;
 		[...(left ?? []), ...(right ?? [])].forEach(({ nLink }) => {
@@ -37,19 +54,23 @@
 	});
 </script>
 
+<svelte:window bind:scrollY />
 <section id="MidFloadHeader" class="">
 	<div
 		style:inset={blockData.style?.inset}
 		class="fixed top-2 flex justify-center w-lvw z-30 h-(--header-height) px-2 md:px-0"
 	>
 		<div class="container w-full h-full md:max-w-full md:px-2 lg:container">
-			<!-- desktop -->
 			<Nav.Root viewport={false} class="w-full min-w-full" orientation="horizontal">
+				<!-- desktop -->
 				<Nav.List
 					style={`background:${blockData.style?.background};`}
-					class="px-0 lg:px-10 mx-auto bg-background shadow-xl max-w-full rounded-2xl w-full items-center justify-center h-full hidden md:flex"
+					class={cn(
+						'px-0 transition-transform ease-in-out duration-300 lg:px-10 mx-auto bg-background shadow-xl max-w-full rounded-2xl w-full items-center justify-center h-full hidden lg:grid grid-cols-10',
+						hidden && '-translate-y-full'
+					)}
 				>
-					<div class="grow shrink basis-0 flex w-full items-center justify-around">
+					<div class="col-span-4 flex justify-center items-center">
 						{#if Object.entries(supportedLocales).length > 0}
 							<Nav.Item class="px-2 ">
 								<LocaleSwitcher useFlag />
@@ -60,7 +81,7 @@
 						{/each}
 					</div>
 					<!--  careful with the magic flex basis number!!  -->
-					<Nav.Item class="grow-0 w-full shrink basis-60 lg:basis-80">
+					<Nav.Item class="col-span-2">
 						<Nav.Link
 							href={`/${locale ?? ''}`}
 							aria-label="home page"
@@ -78,20 +99,21 @@
 							</div>
 						</Nav.Link>
 					</Nav.Item>
-					<div class="flex grow shrink basis-0 justify-around items-center">
+					<div class="flex col-span-4">
 						{#each right ?? [] as { nLink }}
 							{@render nestedLink({ nLink })}
 						{/each}
 					</div>
 				</Nav.List>
 				<!-- mobile -->
-				<div class="w-full md:hidden">
+				<div class="w-full lg:hidden">
 					<!--  <div class="min-w-full flex grow w-full h-auto items-center justify-end md:hidden">  -->
 					<Sheet.Root bind:open>
 						<div
 							style:background={blockData.style?.background}
 							class={cn(
-								' py-2 px-4 flex justify-between rounded-2xl items-center h-full w-full transition-transform ease-out duration-200 shadow-xl'
+								' py-2 px-4 flex justify-between rounded-2xl items-center h-full w-full transition-transform ease-out duration-200 shadow-xl',
+								hidden && '-translate-y-full'
 							)}
 						>
 							<a href={`/${locale ?? ''}`} aria-label="home page" class="h-full px-2">
@@ -141,7 +163,7 @@
 						<Button
 							onclick={() => (open = false)}
 							class={cn(
-								'whitespace-nowrap font-semibold m-0 w-full p-2 h-auto hover:bg-transparent dark:hover:bg-transparent hover:text-primary/50',
+								'whitespace-break-spaces  font-semibold m-0 w-full p-2 h-auto hover:bg-transparent dark:hover:bg-transparent hover:text-primary/50 text-center',
 								activeLink == nLink && 'text-primary underline underline-offset-6 '
 							)}
 							link={nLink?.arr[0].link}
@@ -150,7 +172,7 @@
 				</Nav.Link>
 			{:else}
 				<!--  Trigger must com after because we need to use peer  -->
-				<Nav.Trigger class="w-fit p-2 h-auto hover:bg-accent whitespace-normal">
+				<Nav.Trigger class="w-fit p-2 h-auto hover:bg-accent text-center whitespace-normal">
 					<span
 						class:underline={activeLink == nLink}
 						class:underline-offset-6={activeLink == nLink}
@@ -161,7 +183,7 @@
 					</span>
 				</Nav.Trigger>
 				<Nav.Content>
-					<ul class=" flex flex-col justify-start items-start gap-1 md:w-30 lg:w-40">
+					<ul class=" flex flex-col justify-start items-start gap-1 md:min-w-30 lg:min-w-40">
 						{#each nLink.arr ?? [] as { link }}
 							<Nav.Link>
 								{#snippet child()}
