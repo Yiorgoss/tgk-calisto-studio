@@ -5,11 +5,10 @@
 	import { cn } from '@/utils';
 	import { MediaQuery } from 'svelte/reactivity';
 
-	const mobile = new MediaQuery('max-width: 480px');
-
 	const { blockData }: { blockData: IStickyContainers; index?: number } = $props();
 	const { list, title, style } = $derived(blockData);
 
+	const mobile = new MediaQuery('max-width: 768px');
 	//  const height = mobile.current ? mobileStyle?.height : style?.height;
 </script>
 
@@ -18,13 +17,18 @@
 		{#each list ?? [] as { richText, image }, i}
 			{@const left = i % 2 == 1}
 
+			<!--  style:top={}  -->
 			<div
-				style:top={`${50 * i + 5}px`}
 				style:border={blockData.style?.border}
 				style:background={style?.multiBg?.bgs?.split(',')[i % style?.multiBg?.k]}
 				style:border-radius={style?.borderRadius}
+				style={blockData.stick?.bot
+					? blockData.stick?.mobile && mobile.current
+						? `z-index:${10 - i};bottom:0;`
+						: `top:${50 * i + 5}px;`
+					: `top:${50 * i + 5}px;`}
 				class={cn(
-					` text-background bg-foreground rounded-3xl sticky`,
+					` text-background bg-foreground sticky rounded-3xl `,
 					left && 'bg-background border-foreground border '
 				)}
 			>
