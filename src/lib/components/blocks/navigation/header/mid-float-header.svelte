@@ -47,9 +47,9 @@
 			<Nav.Root viewport={false} class="w-full min-w-full" orientation="horizontal">
 				<Nav.List
 					style={`background:${blockData.style?.background};`}
-					class="px-0 lg:px-10 mx-auto bg-background shadow-xl max-w-full rounded-2xl w-full items-center justify-center h-full hidden md:flex"
+					class="px-0 lg:px-10 mx-auto bg-background shadow-xl max-w-full rounded-2xl w-full items-center justify-center h-full hidden lg:grid grid-cols-10"
 				>
-					<div class="grow shrink basis-0 flex w-full items-center justify-around">
+					<div class="col-span-4 flex">
 						{#if Object.entries(supportedLocales).length > 0}
 							<Nav.Item class="px-2 ">
 								<LocaleSwitcher useFlag />
@@ -60,7 +60,7 @@
 						{/each}
 					</div>
 					<!--  careful with the magic flex basis number!!  -->
-					<Nav.Item class="grow-0 w-full shrink basis-60 lg:basis-80">
+					<Nav.Item class="col-span-2">
 						<Nav.Link
 							href={`/${locale ?? ''}`}
 							aria-label="home page"
@@ -78,14 +78,14 @@
 							</div>
 						</Nav.Link>
 					</Nav.Item>
-					<div class="flex grow shrink basis-0 justify-around items-center">
+					<div class="flex col-span-4">
 						{#each right ?? [] as { nLink }}
 							{@render nestedLink({ nLink })}
 						{/each}
 					</div>
 				</Nav.List>
 				<!-- mobile -->
-				<div class="w-full md:hidden">
+				<div class="w-full lg:hidden">
 					<!--  <div class="min-w-full flex grow w-full h-auto items-center justify-end md:hidden">  -->
 					<Sheet.Root bind:open>
 						<div
@@ -141,7 +141,7 @@
 						<Button
 							onclick={() => (open = false)}
 							class={cn(
-								'whitespace-nowrap font-semibold m-0 w-full p-2 h-auto hover:bg-transparent dark:hover:bg-transparent hover:text-primary/50',
+								'whitespace-break-spaces  font-semibold m-0 w-full p-2 h-auto hover:bg-transparent dark:hover:bg-transparent hover:text-primary/50',
 								activeLink == nLink && 'text-primary underline underline-offset-6 '
 							)}
 							link={nLink?.arr[0].link}

@@ -22,8 +22,8 @@
 				style:border={blockData.style?.border}
 				style:background={style?.multiBg?.bgs?.split(',')[i % style?.multiBg?.k]}
 				style:border-radius={style?.borderRadius}
-				style={blockData.stick?.bot
-					? blockData.stick?.mobile && mobile.current
+				style={true || blockData.stick?.bot
+					? true || (blockData.stick?.mobile && mobile.current)
 						? `z-index:${10 - i};bottom:0;`
 						: `top:${50 * i + 5}px;`
 					: `top:${50 * i + 5}px;`}
