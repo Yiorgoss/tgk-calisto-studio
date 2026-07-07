@@ -9,18 +9,35 @@
 	import LocaleSwitcher from '@/components/common/locale-switcher.svelte';
 	import { supportedLocales } from '@/config';
 	import Icon from '@/components/common/icon.svelte';
+	import { scroll } from 'motion';
+	import { untrack } from 'svelte';
 
 	const { blockData }: { blockData: IMidFloadHeader } = $props();
 
 	const { image, left, right } = $derived(blockData);
 	const { locale, slug } = $derived(page.params);
 
+	let scrollY = $state(0);
+	let previous = $state(0);
+	let hidden = $state(false);
+
+	$effect(() => {
+		const prev = untrack(() => previous);
+
+		if (prev - scrollY > 0) {
+			hidden = true;
+		} else {
+			hidden = false;
+		}
+		previous = scrollY;
+	});
+
 	let open = $state(false);
 
 	let activeLink = $derived.by(() => {
 		/*
-	this little cancerous funciton simply combines all the available links,
-	iterates them until we find the active link then returns it to be used to set styles later on
+			this little cancerous funciton simply combines all the available links,
+			iterates them until we find the active link then returns it to be used to set styles later on
 	  */
 		let activeNest;
 		[...(left ?? []), ...(right ?? [])].forEach(({ nLink }) => {
@@ -37,17 +54,21 @@
 	});
 </script>
 
+<svelte:window bind:scrollY />
 <section id="MidFloadHeader" class="">
 	<div
 		style:inset={blockData.style?.inset}
 		class="fixed top-2 flex justify-center w-lvw z-30 h-(--header-height) px-2 md:px-0"
 	>
 		<div class="container w-full h-full md:max-w-full md:px-2 lg:container">
-			<!-- desktop -->
 			<Nav.Root viewport={false} class="w-full min-w-full" orientation="horizontal">
+				<!-- desktop -->
 				<Nav.List
 					style={`background:${blockData.style?.background};`}
-					class="px-0 lg:px-10 mx-auto bg-background shadow-xl max-w-full rounded-2xl w-full items-center justify-center h-full hidden lg:grid grid-cols-10"
+					class={cn(
+						'px-0 transition-transform ease-in-out duration-300 lg:px-10 mx-auto bg-background shadow-xl max-w-full rounded-2xl w-full items-center justify-center h-full hidden lg:grid grid-cols-10',
+						hidden && '-translate-y-full'
+					)}
 				>
 					<div class="col-span-4 flex">
 						{#if Object.entries(supportedLocales).length > 0}
