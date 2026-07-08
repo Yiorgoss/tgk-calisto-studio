@@ -6,9 +6,9 @@
 </script>
 
 <div
-	style:background={data.style.background}
-	style:height={data.style.height}
-	class:container={data.style.container}
+	style:background={data.style?.background}
+	style:height={data.style?.height}
+	class:container={data.style?.container}
 	id="gutterV2"
 	class="relative mx-auto flex items-center"
 >
@@ -17,5 +17,5 @@
 			<Image image={data?.image} />
 		</div>
 	{/if}
-	<div class="z-0 h-px w-full" style:background={data.style.color}></div>
+	<div class="z-0 h-px w-full" style:background={data.style?.color}></div>
 </div>
