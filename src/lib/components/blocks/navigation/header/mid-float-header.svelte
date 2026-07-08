@@ -163,7 +163,7 @@
 						<Button
 							onclick={() => (open = false)}
 							class={cn(
-								'whitespace-break-spaces  font-semibold m-0 w-full p-2 h-auto hover:bg-transparent dark:hover:bg-transparent hover:text-primary/50 text-center',
+								'whitespace-break-spaces font-semibold m-0 w-full p-2 h-auto hover:bg-transparent dark:hover:bg-transparent hover:text-primary/50 text-center',
 								activeLink == nLink && 'text-primary underline underline-offset-6 '
 							)}
 							link={nLink?.arr[0].link}
@@ -172,7 +172,9 @@
 				</Nav.Link>
 			{:else}
 				<!--  Trigger must com after because we need to use peer  -->
-				<Nav.Trigger class="w-fit p-2 h-auto hover:bg-accent text-center whitespace-normal">
+				<Nav.Trigger
+					class="focus:bg-transparent w-fit p-2 py-3 h-auto hover:bg-accent text-center whitespace-normal"
+				>
 					<span
 						class:underline={activeLink == nLink}
 						class:underline-offset-6={activeLink == nLink}

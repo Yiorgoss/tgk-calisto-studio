@@ -15,8 +15,8 @@
 	class="h-full w-full grid grid-cols-1 grid-rows-1"
 >
 	{#if data.bgImage}
-		<div class="row-start-1 col-start-1">
-			<Image image={data.bgImage} />
+		<div class="relative overflow-hidden row-start-1 col-start-1">
+			<Image class="absolute inset-0" image={data.bgImage} />
 		</div>
 	{/if}
 	<svg
