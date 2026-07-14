@@ -21,7 +21,7 @@
 					class:col-span-3={lastRow == 2 && blockData.list.length - 2 <= i}
 					class="col-span-2"
 				>
-					<div class="text-lg font-bold text-center py-10">{header}</div>
+					<div class="text-lg font-bold text-center py-2">{header}</div>
 					<div class:flex-row={horizontal} class="flex flex-col justify-center items-center">
 						{#each links as { link }}
 							<Button {link} class="h-auto px-0" />
@@ -31,15 +31,15 @@
 			{/each}
 		</div>
 	</div>
-	<div class="px-4 py-20 mx-auto gap-10 container">
+	<div class="px-4 mx-auto flex flex-col gap-10 md:gap-15 container">
 		{#each blockData.locations as { richText, iframe }}
 			<div
-				class="flex flex-col-reverse md:flex-row justify-around max-md:items-start pt-20 gap-8 basis-1/2"
+				class="flex max-md:flex-col-reverse min-h-100 justify-around max-md:items-center md:pt-10 gap-8 basis-1/2"
 			>
-				<div class="flex justify-center items-center">
+				<div class="flex grow shrink basis-auto w-full justify-center items-center">
 					<RichTextRender {richText} />
 				</div>
-				<div class="w-full h-full basis-1/2">
+				<div class="flex grow shrink basis-auto w-full pb-6">
 					{@html iframe}
 				</div>
 			</div>
