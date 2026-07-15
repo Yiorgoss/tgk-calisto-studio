@@ -13,18 +13,13 @@
 		style:padding={blockData.style?.padding}
 		style:border={blockData.style?.border}
 		style:border-radius={blockData.style?.borderRadius}
-		class="overflow-hidden"
+		class="h-full"
 	>
-		<div class="grid grid-rows-2 grid-cols-1 items-center">
-			<div class="h-full w-full">
-				<Image class="h-full w-full" image={blockData.image} />
-			</div>
-			<div class="bg-background flex justify-center items-start relative h-full">
-				<div class="pt-10">
-					<RichTextRender richText={blockData.richText} />
-				</div>
+		<div class="grid grid-cols-1 items-center">
+			<div class="relative row-span-1 h-full w-full">
+				<Image class="h-full w-full " image={blockData.image} />
 				<div
-					class=" absolute top-0 right-0 left-0 -translate-y-1/2 flex justify-center items-center"
+					class="absolute bottom-0 right-0 left-0 translate-y-1/2 flex justify-center items-center"
 				>
 					<div
 						style:background={blockData.midStyle?.background}
@@ -35,6 +30,14 @@
 					>
 						<RichTextRender overrides="text-center" richText={blockData.middleText} />
 					</div>
+				</div>
+			</div>
+			<div
+				style:padding-top={blockData.midStyle?.width && `calc(${blockData.midstyle?.width}/2)px`}
+				class="row-span-1 flex justify-center items-start relative h-auto pt-10"
+			>
+				<div class="">
+					<RichTextRender richText={blockData.richText} />
 				</div>
 			</div>
 		</div>
