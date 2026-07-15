@@ -4,7 +4,6 @@
 	import Image from '@/components/common/image.svelte';
 
 	const { blockData }: { blockData: ITGKCard3 } = $props();
-	$inspect({ blockData });
 </script>
 
 <section id="TGKCard3" class="">

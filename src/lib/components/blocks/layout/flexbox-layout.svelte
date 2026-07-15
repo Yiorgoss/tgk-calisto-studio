@@ -20,10 +20,10 @@
 			style:flex-direction={blockData.style?.flexDirection}
 			style:overflow={blockData.style?.overflow}
 			style:padding={blockData.style?.padding ?? '0px 20px'}
-			class="z-10 w-full h-full container flex flex-wrap justify-center mx-auto col-start-1 row-start-1"
+			class="z-10 w-full h-fit container flex flex-wrap justify-center mx-auto col-start-1 row-start-1"
 		>
 			{#each blockData.list ?? [] as { block }}
-				<div class="flex h-full grow justify-center xl:shrink basis-full sm:basis-1/3 xl:basis-1/5">
+				<div class="flex grow justify-center xl:shrink basis-full sm:basis-1/3 xl:basis-1/5">
 					<RenderBlocks blockData={block?.[0]} />
 				</div>
 			{/each}
