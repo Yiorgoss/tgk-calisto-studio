@@ -115,6 +115,7 @@ export interface Config {
     tgkLandingHome: ITGKLandingHome;
     tgkCard1: ITGKCard1;
     tgkCard2: ITGKCard2;
+    tgkCard3: ITGKCard3;
     tgkDoilyCard: ITGKDoilyCard;
     tgkAccordion: ITGKAccordion;
     tgkGridIcons: ITGKGridIcons;
@@ -125,6 +126,7 @@ export interface Config {
     assets: Asset;
     pages: Page;
     tenants: Tenant;
+    redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
     'payload-kv': PayloadKv;
@@ -142,6 +144,7 @@ export interface Config {
     assets: AssetsSelect<false> | AssetsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
+    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -258,6 +261,8 @@ export interface IImageField {
     sizes?: string | null;
   };
   mobileStyle?: {
+    height?: string | null;
+    width?: string | null;
     padding?: string | null;
   };
   arr?:
@@ -601,6 +606,7 @@ export interface IFooterDesign2 {
         | ITextImageSplit
         | ITGKCard1
         | ITGKCard2
+        | ITGKCard3
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
@@ -630,6 +636,7 @@ export interface IFooterDesign2 {
         | ITextImageSplit
         | ITGKCard1
         | ITGKCard2
+        | ITGKCard3
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
@@ -659,6 +666,7 @@ export interface IFooterDesign2 {
         | ITextImageSplit
         | ITGKCard1
         | ITGKCard2
+        | ITGKCard3
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
@@ -684,7 +692,14 @@ export interface IFooterDesign2 {
 export interface ITextUnderCard {
   image?: IImageField;
   richText?: IRichTextField;
-  link?: (number | null) | Page;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    reference?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    url?: string | null;
+  };
   style?: {
     alignX?: ('start' | 'center' | 'end' | 'space-around' | 'space-evenly') | null;
     alignY?: ('start' | 'center' | 'end' | 'stretch') | null;
@@ -828,6 +843,14 @@ export interface IButtonBlock {
  */
 export interface IRichText {
   richText?: IRichTextField;
+  style?: {
+    background?: string | null;
+    padding?: string | null;
+    height?: string | null;
+    width?: string | null;
+    alignX?: ('start' | 'center' | 'end' | 'space-around' | 'space-evenly') | null;
+    alignY?: ('start' | 'center' | 'end' | 'stretch') | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'rtBlock';
@@ -868,6 +891,10 @@ export interface IStickyContainers {
   title?: string | null;
   list?:
     | {
+        stick?: {
+          bot?: boolean | null;
+          mobile?: boolean | null;
+        };
         richText?: IRichTextField;
         image?: IImageField;
         id?: string | null;
@@ -875,6 +902,7 @@ export interface IStickyContainers {
     | null;
   style?: {
     padding?: string | null;
+    margin?: string | null;
     gap?: string | null;
     multiBg?: {
       /**
@@ -1036,9 +1064,6 @@ export interface Form {
       )[]
     | null;
   submitButtonLabel?: string | null;
-  /**
-   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
-   */
   confirmationType?: ('message' | 'redirect') | null;
   confirmationMessage?: {
     root: {
@@ -1058,9 +1083,6 @@ export interface Form {
   redirect?: {
     url: string;
   };
-  /**
-   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
-   */
   emails?:
     | {
         emailTo?: string | null;
@@ -1069,9 +1091,6 @@ export interface Form {
         replyTo?: string | null;
         emailFrom?: string | null;
         subject: string;
-        /**
-         * Enter the message that should be sent in this email.
-         */
         message?: {
           root: {
             type: string;
@@ -1153,7 +1172,7 @@ export interface IFlexItem {
  * via the `definition` "ITGKCard1".
  */
 export interface ITGKCard1 {
-  title?: string | null;
+  richText?: IRichTextField;
   left?: boolean | null;
   style?: {
     background?: string | null;
@@ -1175,7 +1194,8 @@ export interface ITGKCard1 {
  */
 export interface ITGKCard2 {
   image?: IImageField;
-  title?: string | null;
+  richText?: IRichTextField;
+  link?: (number | null) | Page;
   style?: {
     background?: string | null;
     height?: string | null;
@@ -1198,11 +1218,13 @@ export interface ITGKCardIcon {
       }[]
     | null;
   style?: {
+    padding?: string | null;
     background?: string | null;
     border?: string | null;
     borderRadius?: string | null;
     width?: string | null;
     height?: string | null;
+    gap?: string | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -1219,6 +1241,7 @@ export interface ITGKDoilyCard {
     padding?: string | null;
     height?: string | null;
     width?: string | null;
+    aspectRatio?: string | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -1274,6 +1297,40 @@ export interface ITextImageSplit {
   id?: string | null;
   blockName?: string | null;
   blockType: 'textImageSplit';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ITGKCard3".
+ */
+export interface ITGKCard3 {
+  image?: IImageField;
+  middleText?: IRichTextField;
+  richText?: IRichTextField;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    reference?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    url?: string | null;
+  };
+  style?: {
+    background?: string | null;
+    color?: string | null;
+    padding?: string | null;
+    width?: string | null;
+    maxWidth?: string | null;
+    border?: string | null;
+    borderRadius?: string | null;
+  };
+  midStyle?: {
+    background?: string | null;
+    width?: string | null;
+    border?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tgkCard3';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1365,6 +1422,7 @@ export interface IFlexboxLayout {
               | ITextImageSplit
               | ITGKCard1
               | ITGKCard2
+              | ITGKCard3
               | ITGKDoilyCard
               | ITGKAccordion
               | ITGKGridIcons
@@ -1375,13 +1433,15 @@ export interface IFlexboxLayout {
       }[]
     | null;
   style?: {
+    padding?: string | null;
+    background?: string | null;
     gap?: string | null;
     alignX?: ('start' | 'center' | 'end' | 'space-around' | 'space-evenly') | null;
     alignY?: ('start' | 'center' | 'end' | 'stretch') | null;
     flexDirection?: string | null;
-    flexWrap?: string | null;
     overflow?: string | null;
   };
+  bgImg?: IImageField;
   id?: string | null;
   blockName?: string | null;
   blockType: 'flexboxLayout';
@@ -1520,6 +1580,7 @@ export interface IBlockColumnLayout {
         | ITextImageSplit
         | ITGKCard1
         | ITGKCard2
+        | ITGKCard3
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
@@ -1549,6 +1610,7 @@ export interface IBlockColumnLayout {
         | ITextImageSplit
         | ITGKCard1
         | ITGKCard2
+        | ITGKCard3
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
@@ -1578,6 +1640,7 @@ export interface IBlockColumnLayout {
         | ITextImageSplit
         | ITGKCard1
         | ITGKCard2
+        | ITGKCard3
         | ITGKDoilyCard
         | ITGKAccordion
         | ITGKGridIcons
@@ -1602,6 +1665,8 @@ export interface IBlockColumnLayout {
     padding?: string | null;
     gap?: string | null;
     flexDirection?: string | null;
+    alignX?: ('start' | 'center' | 'end' | 'space-around' | 'space-evenly') | null;
+    alignY?: ('start' | 'center' | 'end' | 'stretch') | null;
   };
   animation?: IAnimation;
   stickerList?:
@@ -1702,6 +1767,7 @@ export interface IClipGutter {
   };
   style?: {
     background?: string | null;
+    height?: string | null;
   };
   bgImage?: IImageField;
   id?: string | null;
@@ -1942,6 +2008,25 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: number;
+  tenant?: (number | null) | Tenant;
+  from: string;
+  to?: {
+    type?: ('reference' | 'custom') | null;
+    reference?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    url?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -1996,6 +2081,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tenants';
         value: number | Tenant;
+      } | null)
+    | ({
+        relationTo: 'redirects';
+        value: number | Redirect;
       } | null)
     | ({
         relationTo: 'forms';
@@ -2191,6 +2280,23 @@ export interface TenantsSelect<T extends boolean = true> {
 export interface INavigationSelect<T extends boolean = true> {
   header?: T | {};
   footer?: T | {};
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects_select".
+ */
+export interface RedirectsSelect<T extends boolean = true> {
+  tenant?: T;
+  from?: T;
+  to?:
+    | T
+    | {
+        type?: T;
+        reference?: T;
+        url?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
